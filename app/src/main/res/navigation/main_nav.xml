@@ -14,10 +14,23 @@
         android:id="@+id/addFragment"
         android:name="com.sdk.hatlovandijon.ui.bottom.add.AddFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_add">
+        <action
+            android:id="@+id/action_addFragment_to_problemFragment"
+            app:destination="@id/problemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/chartFragment"
         android:name="com.sdk.hatlovandijon.ui.bottom.chart.ChartFragment"
         android:label="fragment_chart"
         tools:layout="@layout/fragment_chart" />
+    <fragment
+        android:id="@+id/problemFragment"
+        android:name="com.sdk.hatlovandijon.ui.bottom.problem.ProblemFragment"
+        android:label="fragment_problem"
+        tools:layout="@layout/fragment_problem" />
 </navigation>

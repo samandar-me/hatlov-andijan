@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.sdk.hatlovandijon.R
@@ -21,6 +22,15 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+        var isVisible = false
+        binding.tvInterviewer.click {
+            isVisible = !isVisible
+            binding.linearInterviewer.isVisible = isVisible
+            binding.tvInterviewer.textColor(if (isVisible) R.color.gray else R.color.blue)
+        }
+        binding.btnContinue.click {
+            findNavController().navigate(R.id.action_addFragment_to_problemFragment)
+        }
     }
 
     private fun editTexts() {
@@ -31,7 +41,11 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
                 etHomeBoss to tvHomeBoss,
                 etAge to tvAge,
                 etGen to tvGen,
-                etNumber to tvNumber
+                etNumber to tvNumber,
+                etName to tvName,
+                etLastName to tvLastName,
+                etIntAge to tvIntAge,
+                etIntNumber to tvIntNumber
             )
             editTextList.forEach {
                 it.key.sutUpInput(it.value)

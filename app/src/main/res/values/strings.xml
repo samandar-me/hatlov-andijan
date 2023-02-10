@@ -24,4 +24,6 @@
     <string name="gender">Jinsi</string>
     <string name="number">Telefon raqam</string>
     <string name="interview_del">Suhbat o\'tkazilgan xonadon vakili</string>
+    <string name="cont">Davom etish</string>
+    <string name="problemContent">Muammo mazmuni</string>
 </resources>

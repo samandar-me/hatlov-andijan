@@ -3,6 +3,7 @@ package com.sdk.hatlovandijon.ui.base
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -46,5 +47,8 @@ abstract class BaseFragment(
                 )
             }
         }
+    }
+    fun TextView.textColor(@ColorRes color: Int) {
+        this.setTextColor(ContextCompat.getColor(requireContext(), color))
     }
 }

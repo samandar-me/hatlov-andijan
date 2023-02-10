@@ -13,6 +13,7 @@
         android:background="@color/bottom_back"
         app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:itemIconTint="@drawable/bottom_selector"
+        app:itemIconSize="@dimen/_12sdp"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
