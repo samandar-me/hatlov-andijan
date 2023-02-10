@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentAddBinding
@@ -17,10 +18,24 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         editTexts()
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
+
     private fun editTexts() {
         binding.apply {
-            etStreetName.sutUpInput(binding.tvStreetName)
+            val editTextList = mapOf(
+                etStreetName to tvStreetName,
+                etHomeAddress to tvHomeAddress,
+                etHomeBoss to tvHomeBoss,
+                etAge to tvAge,
+                etGen to tvGen,
+                etNumber to tvNumber
+            )
+            editTextList.forEach {
+                it.key.sutUpInput(it.value)
+            }
         }
     }
 }
