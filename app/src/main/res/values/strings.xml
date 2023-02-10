@@ -3,9 +3,9 @@
     <string name="login">Login</string>
     <string name="parol">Parol</string>
     <string name="enter">Kirish</string>
-    <string name="main_page">Home</string>
-    <string name="problem_page">Add</string>
-    <string name="chart">Statistics</string>
+    <string name="main_page">Uy</string>
+    <string name="problem_page">Muammo qo\'shish</string>
+    <string name="chart">Ko\'rsatgichlar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Izlash...</string>
@@ -26,4 +26,7 @@
     <string name="interview_del">Suhbat o\'tkazilgan xonadon vakili</string>
     <string name="cont">Davom etish</string>
     <string name="problemContent">Muammo mazmuni</string>
+    <string name="save">Saqlash</string>
+    <string name="pdesc">Izoh</string>
+    <string name="upload_image">Rasm joylash</string>
 </resources>
