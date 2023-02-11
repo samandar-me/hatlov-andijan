@@ -82,4 +82,8 @@ dependencies {
     implementation Dependencies.Lottie
 
     implementation Dependencies.Intuit
+    implementation Dependencies.Permission
+    implementation Dependencies.FishBun
+    implementation Dependencies.Glide
+    annotationProcessor Dependencies.GlideComp
 }

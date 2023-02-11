@@ -1,14 +1,9 @@
 package com.sdk.hatlovandijon.ui.bottom.add
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentAddBinding
 import com.sdk.hatlovandijon.ui.base.BaseFragment

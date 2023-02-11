@@ -1,0 +1,11 @@
+<com.google.android.material.imageview.ShapeableImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/_4sdp"
+    android:layout_gravity="center"
+    android:layout_width="@dimen/_65sdp"
+    android:scaleType="fitXY"
+    app:shapeAppearanceOverlay="@style/circle"
+    android:padding="1dp"
+    android:id="@+id/imageView"
+    android:layout_height="@dimen/_64sdp" />

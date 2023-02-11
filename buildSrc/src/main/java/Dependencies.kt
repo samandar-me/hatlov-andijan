@@ -30,6 +30,10 @@ object Dependencies {
     const val Navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.nav}"
     const val NavUI = "androidx.navigation:navigation-ui-ktx:${Versions.nav}"
     const val NavFeature = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.nav}"
+    const val Permission = "com.karumi:dexter:${Versions.per}"
+    const val FishBun = "io.github.sangcomz:fishbun:${Versions.fish}"
+    const val Glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val GlideComp = "com.github.bumptech.glide:compiler:${Versions.glide}"
 }
 
 object Versions {
@@ -53,4 +57,7 @@ object Versions {
     const val m1v = "1.8.0"
     const val intuit = "1.0.6"
     const val nav = "2.5.3"
+    const val per = "6.2.1"
+    const val fish = "1.0.0-beta01"
+    const val glide = "4.12.0"
 }
