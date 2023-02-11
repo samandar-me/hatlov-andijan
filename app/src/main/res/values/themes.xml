@@ -39,4 +39,7 @@
     <style name="circle">
         <item name="cornerSize">10%</item>
     </style>
+    <style name="TextStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/poppins_semibold</item>
+    </style>
 </resources>
