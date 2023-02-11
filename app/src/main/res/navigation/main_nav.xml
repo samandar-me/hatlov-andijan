@@ -9,7 +9,15 @@
         android:id="@+id/mainFragment"
         android:name="com.sdk.hatlovandijon.ui.bottom.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.sdk.hatlovandijon.ui.bottom.add.AddFragment"
@@ -33,4 +41,9 @@
         android:name="com.sdk.hatlovandijon.ui.bottom.problem.ProblemFragment"
         android:label="fragment_problem"
         tools:layout="@layout/fragment_problem" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.sdk.hatlovandijon.ui.bottom.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>

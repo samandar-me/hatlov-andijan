@@ -40,6 +40,8 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@color/green"
+            android:clickable="false"
+            android:focusable="false"
             android:text="@string/completed"
             android:textAllCaps="false"
             android:textSize="@dimen/_3sdp" />

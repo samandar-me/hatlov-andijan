@@ -86,4 +86,7 @@ abstract class BaseFragment(
         intent.data = uri
         startActivityForResult(intent, 100)
     }
+    fun View.setBackColor(@ColorRes color: Int) {
+        this.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
+    }
 }

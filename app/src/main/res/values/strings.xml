@@ -36,4 +36,14 @@
     <string name="less">Kamida 1 ta rasm tanlang!</string>
     <string name="all_images">Barcha rasmlar</string>
     <string name="image_pick">Rasm tanlash</string>
+    <string name="age_n">20</string>
+    <string name="male">Erkak</string>
+    <string name="tash">Ma\'sul tashkilot</string>
+    <string name="and">Andijon suv ta\'miot tashkiloti</string>
+    <string name="from_date">Sanadan</string>
+    <string name="to_date">Sanagacha</string>
+    <string name="type">Turi</string>
+    <string name="filter">Filterlash</string>
+    <string name="process">Jarayonda</string>
+    <string name="search_f">Izlash</string>
 </resources>

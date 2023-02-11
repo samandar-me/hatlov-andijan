@@ -1,60 +1,76 @@
 package com.sdk.hatlovandijon.ui.bottom.chart
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.sdk.hatlovandijon.R
+import com.sdk.hatlovandijon.databinding.FragmentChartBinding
+import com.sdk.hatlovandijon.ui.base.BaseFragment
+import com.sdk.hatlovandijon.util.viewBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ChartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ChartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+class ChartFragment : BaseFragment(
+    R.layout.fragment_chart
+) {
+    private val binding by viewBinding { FragmentChartBinding.bind(it) }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        editTexts()
+        var isBaseLinearVisible = false
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
-    }
+        binding.btnFilterSearch.click {
+            isBaseLinearVisible = !isBaseLinearVisible
+            binding.baseLinear.isVisible = isBaseLinearVisible
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chart, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+            binding.btnFilterSearch.apply {
+                text = if (isBaseLinearVisible) {
+                    setBackColor(R.color.blue)
+                    setTextColor(Color.WHITE)
+                    getString(R.string.search_f)
+                } else {
+                    setBackColor(R.color.white)
+                    setTextColor(Color.BLUE)
+                    getText(R.string.filter)
                 }
             }
+        }
+        setUpAutoComplete()
+//        MaterialDatePicker.Builder.datePicker()
+//            .setTitleText("")
+//            .build()
+//            .show(childFragmentManager, "DATE_PICKER")
+    }
+
+    private fun setUpAutoComplete() {
+        var text = getString(R.string.process)
+        var arrayAdapter = ArrayAdapter(
+            requireContext(), android.R.layout.simple_list_item_1,
+            listOf(text)
+        )
+        binding.autoCompleteTv.setAdapter(arrayAdapter)
+        binding.autoCompleteTv.click {
+            text = if (text == getString(R.string.process)) getString(R.string.filter) else getString(R.string.process)
+            arrayAdapter = ArrayAdapter(
+                requireContext(), android.R.layout.simple_list_item_1,
+                listOf(text)
+            )
+            binding.autoCompleteTv.setAdapter(arrayAdapter)
+        }
+    }
+    private fun editTexts() {
+        binding.apply {
+            val list = mapOf(
+                etFromDate to tvDate,
+                etToDate to tvToDate
+            )
+            list.forEach {
+                it.key.sutUpInput(it.value)
+            }
+        }
     }
 }

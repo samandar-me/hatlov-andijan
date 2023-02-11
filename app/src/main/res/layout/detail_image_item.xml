@@ -1,0 +1,8 @@
+<com.google.android.material.imageview.ShapeableImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/imv"
+    android:layout_width="@dimen/_170sdp"
+    android:layout_height="@dimen/_170sdp"
+    android:layout_margin="@dimen/_4sdp"
+    android:scaleType="fitXY"
+    app:shapeAppearanceOverlay="@style/circle" />

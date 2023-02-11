@@ -28,13 +28,12 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.problemFragment -> {
-                    binding.navView.menu[1].apply {
-                        isChecked = true
-                    }
-                }
+                R.id.detailFragment -> checkedMenu(0)
+                R.id.problemFragment -> checkedMenu(1)
             }
         }
-        NavigationUI
+    }
+    private fun checkedMenu(index: Int) {
+        binding.navView.menu[index].isChecked = true
     }
 }
