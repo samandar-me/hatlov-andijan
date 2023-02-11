@@ -28,11 +28,23 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.detailFragment -> checkedMenu(0)
-                R.id.problemFragment -> checkedMenu(1)
+                R.id.detailFragment -> {
+                    changeBottomNavVisible(false)
+                }
+                R.id.problemFragment -> {
+                    changeBottomNavVisible(false)
+                }
+                else -> {
+                    changeBottomNavVisible(true)
+                }
             }
         }
     }
+
+    private fun changeBottomNavVisible(isVisible: Boolean) {
+        binding.navView.isVisible = isVisible
+    }
+
     private fun checkedMenu(index: Int) {
         binding.navView.menu[index].isChecked = true
     }

@@ -30,7 +30,7 @@
     <string name="pdesc">Izoh</string>
     <string name="upload_image">Rasm joylash</string>
     <string name="permission_req">Ruxsat talab qilinadi</string>
-    <string name="per_desc">Rasmni tanlash uchun saqlash ruxsat kerak. Siz ularni ilova sozlamalarida berishingiz mumkin</string>
+    <string name="per_desc">Rasmni tanlash uchun ruxsat kerak. Siz uni ilova sozlamalarida berishingiz mumkin</string>
     <string name="open_set">Sozlamalarni ochish</string>
     <string name="many">Ko\'pi bilan 4 ta rasm tanlang!</string>
     <string name="less">Kamida 1 ta rasm tanlang!</string>
@@ -46,4 +46,8 @@
     <string name="filter">Filterlash</string>
     <string name="process">Jarayonda</string>
     <string name="search_f">Izlash</string>
+    <string name="date_enter">Sanani tanlang</string>
+    <string name="cancel">Bekor qilish</string>
+    <string name="ok">Ok</string>
+    <string name="set">Tanlash</string>
 </resources>

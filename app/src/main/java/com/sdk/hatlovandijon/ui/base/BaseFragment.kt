@@ -4,18 +4,21 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.view.View
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.sdk.hatlovandijon.R
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
@@ -37,6 +40,25 @@ abstract class BaseFragment(
     }
 
     fun TextInputEditText.sutUpInput(title: TextView) {
+        this.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                title.setTextColor(
+                    ContextCompat.getColor(requireContext(), R.color.blue)
+                )
+                this.setTextColor(
+                    ContextCompat.getColor(requireContext(), R.color.blue)
+                )
+            } else {
+                title.setTextColor(
+                    ContextCompat.getColor(requireContext(), R.color.gray)
+                )
+                this.setTextColor(
+                    ContextCompat.getColor(requireContext(), R.color.gray)
+                )
+            }
+        }
+    }
+    fun AutoCompleteTextView.sutUpInput(title: TextView) {
         this.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 title.setTextColor(

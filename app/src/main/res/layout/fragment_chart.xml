@@ -51,6 +51,7 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
+                        android:id="@+id/linearToDate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_4sdp"
@@ -77,10 +78,12 @@
                             app:boxCornerRadiusTopStart="@dimen/_8sdp"
                             app:boxStrokeColor="@color/blue">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <AutoCompleteTextView
                                 android:id="@+id/etFromDate"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:gravity="center"
+                                android:layout_height="@dimen/_43sdp"
+                                android:inputType="none" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,10 +116,12 @@
                             app:boxCornerRadiusTopStart="@dimen/_8sdp"
                             app:boxStrokeColor="@color/blue">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <AutoCompleteTextView
                                 android:id="@+id/etToDate"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:inputType="none"
+                                android:gravity="center"
+                                android:layout_height="@dimen/_43sdp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,9 +144,9 @@
                         android:textSize="@dimen/_8sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/etLayAuto"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
-                        android:id="@+id/etLayAuto"
                         android:layout_height="wrap_content"
                         app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
                         app:boxCornerRadiusBottomStart="@dimen/_8sdp"
