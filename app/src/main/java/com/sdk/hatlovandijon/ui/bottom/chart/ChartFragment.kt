@@ -75,7 +75,7 @@ class ChartFragment : BaseFragment(
         binding.autoCompleteTv.setAdapter(arrayAdapter)
         binding.autoCompleteTv.click {
             text =
-                if (text == getString(R.string.process)) getString(R.string.filter) else getString(R.string.process)
+                if (text == getString(R.string.process)) getString(R.string.completed) else getString(R.string.process)
             arrayAdapter = ArrayAdapter(
                 requireContext(), android.R.layout.simple_list_item_1,
                 listOf(text)

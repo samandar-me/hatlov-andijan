@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.PasswordTransformationMethod
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.sdk.hatlovandijon.R
@@ -28,17 +29,17 @@ class LoginActivity : AppCompatActivity() {
             etLogin.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     textLogin.setTextColor(
-                        ContextCompat.getColor(this@LoginActivity, R.color.blue)
+                        getCl(R.color.blue)
                     )
                     etLogin.setTextColor(
-                        ContextCompat.getColor(this@LoginActivity, R.color.blue)
+                        getCl(R.color.blue)
                     )
                 } else {
                     textLogin.setTextColor(
-                        ContextCompat.getColor(this@LoginActivity, R.color.gray)
+                        getCl(R.color.gray)
                     )
                     etLogin.setTextColor(
-                        ContextCompat.getColor(this@LoginActivity, R.color.gray)
+                        getCl(R.color.gray)
                     )
                 }
             }
@@ -47,26 +48,26 @@ class LoginActivity : AppCompatActivity() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {
                         textPassword.setTextColor(
-                            ContextCompat.getColor(this@LoginActivity, R.color.blue)
+                            getCl(R.color.blue)
                         )
                         etPassword.setTextColor(
-                            ContextCompat.getColor(this@LoginActivity, R.color.blue)
+                            getCl(R.color.blue)
                         )
                         etLayPass.setPasswordVisibilityToggleTintList(
                             ColorStateList.valueOf(
-                                ContextCompat.getColor(this@LoginActivity, R.color.blue)
+                                getCl(R.color.blue)
                             )
                         )
                     } else {
                         textPassword.setTextColor(
-                            ContextCompat.getColor(this@LoginActivity, R.color.gray)
+                            getCl(R.color.gray)
                         )
                         etPassword.setTextColor(
-                            ContextCompat.getColor(this@LoginActivity, R.color.gray)
+                            getCl(R.color.gray)
                         )
                         etLayPass.setPasswordVisibilityToggleTintList(
                             ColorStateList.valueOf(
-                                ContextCompat.getColor(this@LoginActivity, R.color.gray)
+                                getCl(R.color.gray)
                             )
                         )
                     }
@@ -78,9 +79,13 @@ class LoginActivity : AppCompatActivity() {
                         pr.isVisible = false
                         btnLogin.isVisible = true
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
                     }, 2000)
                 }
             }
         }
+    }
+    private fun getCl(@ColorRes color: Int): Int {
+        return ContextCompat.getColor(this, color)
     }
 }

@@ -19,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
         Handler(mainLooper).postDelayed({
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
             finish()
         }, 2000L)
     }
