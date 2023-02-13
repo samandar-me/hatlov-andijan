@@ -101,6 +101,9 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                     if (report.areAllPermissionsGranted()) {
                         setupImagePicker()
                     } else if (!report.areAllPermissionsGranted()) {
+                        binding.imgUpload.isVisible = true
+                        binding.rv.isVisible = false
+                        binding.prImage.isVisible = false
                         showSettingsDialog()
                     }
                 }
