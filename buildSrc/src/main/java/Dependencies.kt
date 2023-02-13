@@ -34,6 +34,7 @@ object Dependencies {
     const val FishBun = "io.github.sangcomz:fishbun:${Versions.fish}"
     const val Glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val GlideComp = "com.github.bumptech.glide:compiler:${Versions.glide}"
+    const val Shimmer = "com.facebook.shimmer:shimmer:${Versions.shimmer}"
 }
 
 object Versions {
@@ -60,4 +61,5 @@ object Versions {
     const val per = "6.2.1"
     const val fish = "1.0.0-beta01"
     const val glide = "4.12.0"
+    const val shimmer = "0.5.0"
 }

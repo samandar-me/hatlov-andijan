@@ -9,6 +9,7 @@ import android.text.method.PasswordTransformationMethod
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.android.material.snackbar.Snackbar
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.ActivityLoginBinding
 import com.sdk.hatlovandijon.databinding.ActivityMainBinding
@@ -25,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initViews() {
         binding.apply {
-            etLogin.requestFocus()
             etLogin.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     textLogin.setTextColor(

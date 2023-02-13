@@ -1,4 +1,5 @@
 package com.sdk.data.network
 
-class Test {
+interface ApiService {
+
 }

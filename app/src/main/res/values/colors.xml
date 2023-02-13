@@ -15,5 +15,6 @@
     <color name="tcolor">#303031</color>
     <color name="green">#76B451</color>
     <color name="light">#D9D9D9</color>
+    <color name="shimmer">#72D9D9D9</color>
 
 </resources>

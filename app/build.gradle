@@ -80,6 +80,7 @@ dependencies {
 
     // Lottie
     implementation Dependencies.Lottie
+    implementation Dependencies.Shimmer
 
     implementation Dependencies.Intuit
     implementation Dependencies.Permission

@@ -25,6 +25,7 @@
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity

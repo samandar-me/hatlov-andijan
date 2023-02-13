@@ -327,7 +327,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/clickable_linear"
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/poppins_semibold"
