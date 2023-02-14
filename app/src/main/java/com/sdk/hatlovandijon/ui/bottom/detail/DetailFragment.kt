@@ -21,10 +21,10 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
             findNavController().popBackStack()
         }
         binding.linearLocation.click {
-
+            snack("Hehe", false)
         }
         binding.linearNumber.click {
-
+            snack("Fishu", true)
         }
     }
 }

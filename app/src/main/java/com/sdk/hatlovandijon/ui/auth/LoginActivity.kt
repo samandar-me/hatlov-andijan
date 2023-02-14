@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.PasswordTransformationMethod
+import android.view.Gravity
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.ActivityLoginBinding
@@ -75,11 +79,13 @@ class LoginActivity : AppCompatActivity() {
                 btnLogin.setOnClickListener {
                     pr.isVisible = true
                     btnLogin.isVisible = false
+                    snack("Enter your data!", false)
                     Handler(mainLooper).postDelayed({
                         pr.isVisible = false
                         btnLogin.isVisible = true
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        finish()
+                        snack("Successfully", true)
+//                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+//                        finish()
                     }, 2000)
                 }
             }
@@ -87,5 +93,21 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun getCl(@ColorRes color: Int): Int {
         return ContextCompat.getColor(this, color)
+    }
+    private fun snack(text: String, isSuccess: Boolean) {
+        val snackBar = Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_SHORT)
+        val view = snackBar.view
+        val params = view.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        params.setMargins(40,80,40,40)
+        view.layoutParams = params
+        val back = if (isSuccess) R.drawable.snack_success else R.drawable.snack_error
+        val textColor = if (isSuccess) R.color.success_text_color else R.color.error_text_color
+        view.background = ContextCompat.getDrawable(this, back)
+        snackBar.setTextColor(ContextCompat.getColor(this, textColor))
+        val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        textView.textSize = 17f
+        snackBar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+        snackBar.show()
     }
 }

@@ -27,6 +27,7 @@
         <item name="colorPrimaryVariant">@color/blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/teal_200</item>
+        <item name="snackbarStyle">@style/CustomSnackStyle</item>
         <item name="android:statusBarColor">@color/blue</item>
     </style>
 
@@ -46,5 +47,8 @@
     <style name="SubTextStyle" parent="Widget.MaterialComponents.TextView">
         <item name="fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">@dimen/_8sdp</item>
+    </style>
+    <style name="CustomSnackStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/blue</item>
     </style>
 </resources>

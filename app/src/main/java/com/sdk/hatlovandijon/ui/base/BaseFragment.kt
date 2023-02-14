@@ -1,17 +1,22 @@
 package com.sdk.hatlovandijon.ui.base
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.provider.Settings
+import android.view.Gravity
 import android.view.View
 import android.widget.AutoCompleteTextView
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.sdk.hatlovandijon.R
@@ -35,8 +40,21 @@ abstract class BaseFragment(
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 
-    fun snack(text: String) {
-        Snackbar.make(requireView(), text, Snackbar.LENGTH_SHORT).show()
+    fun snack(text: String, isSuccess: Boolean) {
+        val snackBar = Snackbar.make(requireActivity().findViewById(android.R.id.content), text, Snackbar.LENGTH_SHORT)
+        val view = snackBar.view
+        val params = view.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        params.setMargins(40,80,40,40)
+        view.layoutParams = params
+        val back = if (isSuccess) R.drawable.snack_success else R.drawable.snack_error
+        val textColor = if (isSuccess) R.color.success_text_color else R.color.error_text_color
+        view.background = ContextCompat.getDrawable(requireContext(), back)
+        snackBar.setTextColor(ContextCompat.getColor(requireContext(), textColor))
+        val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        textView.textSize = 17f
+        snackBar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+        snackBar.show()
     }
 
     fun TextInputEditText.sutUpInput(title: TextView) {
