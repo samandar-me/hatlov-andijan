@@ -47,6 +47,8 @@ dependencies {
     implementation Dependencies.Navigation
     implementation Dependencies.NavUI
     implementation Dependencies.NavFeature
+    implementation project(path: ':data')
+    implementation project(path: ':domain')
     testImplementation Dependencies.JUnit
     androidTestImplementation Dependencies.ExtUnit
     androidTestImplementation Dependencies.Espresso

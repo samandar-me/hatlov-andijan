@@ -1,0 +1,47 @@
+package com.sdk.hatlovandijon.ui.auth
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.sdk.domain.use_case.base.AllUseCases
+import com.sdk.domain.util.Status
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val allUseCases: AllUseCases,
+) : ViewModel() {
+    private val _state: MutableStateFlow<LoginActivityState> =
+        MutableStateFlow(LoginActivityState.Idle)
+    val state: StateFlow<LoginActivityState> get() = _state
+
+    fun onEvent(event: LoginActivityEvent) {
+        when (event) {
+            is LoginActivityEvent.OnLoginClicked -> {
+                viewModelScope.launch {
+                    allUseCases.loginUseCase(event.loginData).collect { status ->
+                        when(status) {
+                            is Status.Loading -> {
+                                _state.update {
+                                    LoginActivityState.Loading
+                                }
+                            }
+                            is Status.Error -> _state.update {
+                                LoginActivityState.Error(status.message)
+                            }
+                            is Status.Success -> _state.update {
+                                LoginActivityState.Success(status.data)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

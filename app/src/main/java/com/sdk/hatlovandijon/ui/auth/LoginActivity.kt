@@ -9,18 +9,27 @@ import android.text.method.PasswordTransformationMethod
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.sdk.domain.model.LoginData
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.ActivityLoginBinding
 import com.sdk.hatlovandijon.databinding.ActivityMainBinding
 import com.sdk.hatlovandijon.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+    private val viewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -77,29 +86,58 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
                 btnLogin.setOnClickListener {
-                    pr.isVisible = true
-                    btnLogin.isVisible = false
-                    snack("Enter your data!", false)
-                    Handler(mainLooper).postDelayed({
-                        pr.isVisible = false
-                        btnLogin.isVisible = true
-                        snack("Successfully", true)
-//                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-//                        finish()
-                    }, 2000)
+                    login()
+                }
+            }
+        }
+        observeState()
+    }
+
+    private fun observeState() {
+        lifecycleScope.launch {
+            viewModel.state.collectLatest {
+                when(it) {
+                    is LoginActivityState.Idle -> Unit
+                    is LoginActivityState.Loading -> {
+                        binding.pr.isVisible = true
+                        binding.btnLogin.isVisible = false
+                    }
+                    is LoginActivityState.Error -> {
+                        binding.pr.isVisible = false
+                        binding.btnLogin.isVisible = true
+                        snack(getString(R.string.error_message), false)
+                    }
+                    is LoginActivityState.Success -> {
+                        binding.pr.isVisible = false
+                        binding.btnLogin.isVisible = true
+                        snack(getString(R.string.success), true)
+                        delay(1000L)
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    }
                 }
             }
         }
     }
+
+    private fun login() {
+        binding.apply {
+            val username = binding.etLogin.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
+            viewModel.onEvent(LoginActivityEvent.OnLoginClicked(LoginData(username,password)))
+        }
+    }
+
     private fun getCl(@ColorRes color: Int): Int {
         return ContextCompat.getColor(this, color)
     }
+
     private fun snack(text: String, isSuccess: Boolean) {
-        val snackBar = Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_SHORT)
+        val snackBar =
+            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_SHORT)
         val view = snackBar.view
         val params = view.layoutParams as FrameLayout.LayoutParams
         params.gravity = Gravity.TOP
-        params.setMargins(40,80,40,40)
+        params.setMargins(40, 80, 40, 40)
         view.layoutParams = params
         val back = if (isSuccess) R.drawable.snack_success else R.drawable.snack_error
         val textColor = if (isSuccess) R.color.success_text_color else R.color.error_text_color

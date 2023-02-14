@@ -35,6 +35,10 @@ android {
 dependencies {
     implementation Dependencies.KotlinVersion
 
+    // Coroutines
+    implementation Dependencies.Coroutines
+    implementation Dependencies.AndroidCoroutine
+
     //Dagger - Hilt
     implementation Dependencies.Hilt
     kapt Dependencies.KaptHilt

@@ -50,4 +50,6 @@
     <string name="cancel">Bekor qilish</string>
     <string name="ok">Ok</string>
     <string name="set">Tanlash</string>
+    <string name="success">Muvaffaqiyatli</string>
+    <string name="error_message">Login yoki parol xato!</string>
 </resources>

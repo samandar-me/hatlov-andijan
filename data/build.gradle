@@ -36,8 +36,19 @@ dependencies {
 
     implementation Dependencies.KotlinVersion
 
+    // Coroutines
+    implementation Dependencies.Coroutines
+    implementation Dependencies.AndroidCoroutine
+
+    // Retrofit
+    implementation Dependencies.Retrofit
+    implementation Dependencies.GsonConverter
+    implementation Dependencies.Okhttp
+    implementation Dependencies.Interceptor
+
     //Dagger - Hilt
     implementation Dependencies.Hilt
+    implementation project(path: ':domain')
     kapt Dependencies.KaptHilt
     implementation Dependencies.HiltVM
 }
