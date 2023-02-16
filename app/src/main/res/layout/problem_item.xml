@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_4sdp"
-    app:cardBackgroundColor="#C5F1FC"
+    app:strokeWidth="0dp"
+    android:id="@+id/cardView"
     app:cardCornerRadius="@dimen/_12sdp">
 
     <LinearLayout
@@ -24,40 +25,47 @@
                 android:src="@drawable/icon" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:textColor="@color/white"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/name"
-                android:textColor="@color/tcolor"
-                android:textSize="@dimen/_7sdp" />
+                android:textSize="@dimen/_9sdp" />
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_20sdp"
+        <TextView
+            android:id="@+id/textPro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/process"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_2sdp"
+            android:textSize="@dimen/_5sdp"
+            android:background="@drawable/process_back"
             android:layout_marginTop="@dimen/_10sdp"
-            android:backgroundTint="@color/green"
-            android:clickable="false"
-            android:focusable="false"
-            android:text="@string/completed"
-            android:textAllCaps="false"
-            android:textSize="@dimen/_3sdp" />
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_semibold"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
+            android:id="@+id/textProblem"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:maxLines="5"
+            android:ellipsize="end"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/test_mi"
-            android:textColor="@color/tcolor"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_11sdp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/_12sdp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -67,22 +75,27 @@
                 android:src="@drawable/location" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Andijon viloytai, Andijon tumani Nayman qishlog’i Qo’qonlik mahallasi"
-                android:textSize="@dimen/_5sdp" />
+                android:textSize="@dimen/_6sdp" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/bottom_back"
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="08.02.2023"
-            android:textSize="@dimen/_5sdp" />
+            android:textSize="@dimen/_7sdp" />
 
     </LinearLayout>
 

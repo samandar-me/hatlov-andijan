@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/problemContent"
-                    android:textSize="@dimen/_8sdp" />
+                    android:textSize="@dimen/_9sdp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/etLayPrTitle"
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/pdesc"
-                    android:textSize="@dimen/_8sdp" />
+                    android:textSize="@dimen/_9sdp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/etLayDesc"
@@ -126,7 +126,7 @@
                     android:textColor="@color/blue"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/upload_image"
-                    android:textSize="@dimen/_8sdp" />
+                    android:textSize="@dimen/_9sdp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/etLayImage"

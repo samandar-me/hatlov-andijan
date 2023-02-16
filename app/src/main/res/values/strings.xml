@@ -23,7 +23,7 @@
     <string name="age">Yosh</string>
     <string name="gender">Jinsi</string>
     <string name="number">Telefon raqam</string>
-    <string name="interview_del">Suhbat o\'tkazilgan xonadon vakili</string>
+    <string name="interview_del">Xonadon vakili bilan suhbat o\'tkazilgan</string>
     <string name="cont">Davom etish</string>
     <string name="problemContent">Muammo mazmuni</string>
     <string name="save">Saqlash</string>
@@ -52,4 +52,5 @@
     <string name="set">Tanlash</string>
     <string name="success">Muvaffaqiyatli</string>
     <string name="error_message">Login yoki parol xato!</string>
+    <string name="hello">Salom,</string>
 </resources>

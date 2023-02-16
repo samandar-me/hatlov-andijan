@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/streen_name"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayStreetName"
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/home_address"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayHomeAddress"
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/home_boss"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayHomeBoss"
@@ -174,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayHomeBossLastName"
@@ -220,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/age"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayAge"
@@ -256,7 +256,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/gender"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayGen"
@@ -297,7 +297,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/number"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayNumber"
@@ -322,14 +322,14 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/tvInterviewer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/clickable_linear"
-                android:clickable="true"
-                android:focusable="true"
+                android:checked="true"
+                android:textAlignment="center"
+                android:buttonTint="@color/blue"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/interview_del"
                 android:textColor="@color/blue"
@@ -360,7 +360,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/hint_name"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/etLayName"
@@ -396,7 +396,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/hint_last_name"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/etLayLastName"
@@ -439,7 +439,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/age"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/etLayIntAge"
@@ -475,7 +475,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/hint_last_name"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/etLayIntLastName"
@@ -516,7 +516,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/number"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/etLayIntNumber"

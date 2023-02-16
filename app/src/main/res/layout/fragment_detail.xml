@@ -134,6 +134,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
@@ -150,15 +151,17 @@
                         android:paddingVertical="@dimen/_15sdp">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/cardTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/test_mi"
-                            android:textColor="@color/tcolor"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp" />
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/tvBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:layout_gravity="end"

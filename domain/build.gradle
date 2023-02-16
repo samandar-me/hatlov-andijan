@@ -43,4 +43,13 @@ dependencies {
     implementation Dependencies.Hilt
     kapt Dependencies.KaptHilt
     implementation Dependencies.HiltVM
+
+    implementation Dependencies.GsonConverter
+
+    // Room
+    implementation Dependencies.RoomRun
+    implementation Dependencies.RoomKtx
+    annotationProcessor Dependencies.RoomAn
+    kapt Dependencies.RoomComp
+
 }

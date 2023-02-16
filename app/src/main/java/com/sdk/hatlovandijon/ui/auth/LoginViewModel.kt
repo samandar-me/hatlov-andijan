@@ -2,6 +2,7 @@ package com.sdk.hatlovandijon.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sdk.domain.model.UserEntity
 import com.sdk.domain.use_case.base.AllUseCases
 import com.sdk.domain.util.Status
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,8 +36,24 @@ class LoginViewModel @Inject constructor(
                             is Status.Error -> _state.update {
                                 LoginActivityState.Error(status.message)
                             }
-                            is Status.Success -> _state.update {
-                                LoginActivityState.Success(status.data)
+                            is Status.Success -> {
+                                allUseCases.saveTokenUseCase(Pair(status.data.access,status.data.userId))
+                                allUseCases.saveUserUseCase(
+                                    UserEntity(
+                                        refreshToken = status.data.refresh,
+                                        accessToken = status.data.access,
+                                        userId = status.data.userId,
+                                        userName = status.data.userName,
+                                        fullName = status.data.fullName,
+                                        roleName = status.data.roleName,
+                                        roleId = status.data.roleId,
+                                        neiName = status.data.neiName,
+                                        neiId = status.data.neiId
+                                    )
+                                )
+                                _state.update {
+                                    LoginActivityState.Success(status.data)
+                                }
                             }
                         }
                     }

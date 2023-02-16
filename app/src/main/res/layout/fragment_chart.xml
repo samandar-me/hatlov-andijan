@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/from_date"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/etLayFromDate"
@@ -102,7 +102,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="@string/to_date"
-                            android:textSize="@dimen/_8sdp" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/etLayToDate"
@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/type"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayAuto"

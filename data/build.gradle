@@ -51,4 +51,10 @@ dependencies {
     implementation project(path: ':domain')
     kapt Dependencies.KaptHilt
     implementation Dependencies.HiltVM
+
+    // Room
+    implementation Dependencies.RoomRun
+    implementation Dependencies.RoomKtx
+    annotationProcessor Dependencies.RoomAn
+    kapt Dependencies.RoomComp
 }

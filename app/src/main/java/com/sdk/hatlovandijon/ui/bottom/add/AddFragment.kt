@@ -20,6 +20,7 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
         var isVisible = false
         binding.tvInterviewer.click {
             isVisible = !isVisible
+            binding.tvInterviewer.isChecked = !isVisible
             binding.linearInterviewer.isVisible = isVisible
             binding.tvInterviewer.textColor(if (isVisible) R.color.gray else R.color.blue)
         }
