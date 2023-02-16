@@ -5,5 +5,5 @@ data class DetailImageResponse(
 )
 data class DetailImage(
     val id: Int,
-    val image: String
+    val image: String?
 )

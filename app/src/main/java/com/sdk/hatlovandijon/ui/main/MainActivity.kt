@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment)
         binding.navView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.detailFragment -> {
                     changeBottomNavVisible(false)

@@ -1,6 +1,8 @@
 package com.sdk.hatlovandijon.ui.splash
 
 sealed class SplashState {
-    object Loading: SplashState()
-    data class IsLogin(val isLogin: Boolean): SplashState()
+    object Idle: SplashState()
+    object UserAuthed: SplashState()
+    object UserNotAuthed: SplashState()
+    object NoInternet: SplashState()
 }

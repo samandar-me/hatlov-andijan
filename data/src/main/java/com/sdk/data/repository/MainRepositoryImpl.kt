@@ -18,9 +18,13 @@ class MainRepositoryImpl @Inject constructor(
         emit(Status.Loading)
         try {
             val response = mainService.getVariables()
-            response.body().let {
-                if (it?.success!!) {
-                    emit(Status.Success(it.toVariableData()))
+            if (response.code() == 401) {
+                emit(Status.Error("401"))
+            } else {
+                response.body().let {
+                    if (it?.success!!) {
+                        emit(Status.Success(it.toVariableData()))
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -32,7 +36,6 @@ class MainRepositoryImpl @Inject constructor(
         emit(Status.Loading)
         try {
             val response = mainService.getAppeals()
-            println("@@@${response.code()}${response.body()}")
             if (response.isSuccessful) {
                 response.body()?.let {
                     emit(Status.Success(it))

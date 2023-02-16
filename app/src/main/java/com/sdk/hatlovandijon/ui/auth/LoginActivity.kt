@@ -20,14 +20,14 @@ import com.sdk.domain.model.LoginData
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.ActivityLoginBinding
 import com.sdk.hatlovandijon.databinding.ActivityMainBinding
+import com.sdk.hatlovandijon.ui.base.BaseActivity
 import com.sdk.hatlovandijon.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private val viewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,23 +129,5 @@ class LoginActivity : AppCompatActivity() {
 
     private fun getCl(@ColorRes color: Int): Int {
         return ContextCompat.getColor(this, color)
-    }
-
-    private fun snack(text: String, isSuccess: Boolean) {
-        val snackBar =
-            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_SHORT)
-        val view = snackBar.view
-        val params = view.layoutParams as FrameLayout.LayoutParams
-        params.gravity = Gravity.TOP
-        params.setMargins(40, 80, 40, 40)
-        view.layoutParams = params
-        val back = if (isSuccess) R.drawable.snack_success else R.drawable.snack_error
-        val textColor = if (isSuccess) R.color.success_text_color else R.color.error_text_color
-        view.background = ContextCompat.getDrawable(this, back)
-        snackBar.setTextColor(ContextCompat.getColor(this, textColor))
-        val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        textView.textSize = 17f
-        snackBar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
-        snackBar.show()
     }
 }

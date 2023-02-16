@@ -8,6 +8,7 @@ import com.sdk.data.manager.DataStoreManager
 import com.sdk.data.manager.RequestInterceptor
 import com.sdk.data.repository.PersistenceRepositoryImpl
 import com.sdk.domain.repository.PersistenceRepository
+import com.sdk.hatlovandijon.util.NetworkHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,5 +44,10 @@ object PersistenceModule {
     @[Provides Singleton]
     fun provideUserDao(database: AppDatabase): UserDao {
         return database.dao
+    }
+
+    @[Provides Singleton]
+    fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper {
+        return NetworkHelper(context)
     }
 }
