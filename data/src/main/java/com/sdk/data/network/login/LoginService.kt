@@ -13,4 +13,7 @@ interface LoginService {
         @Field("username") userName: String,
         @Field("password") password: String
     ): Response<LoginResponseDTO>
+
+    @POST("api/v1/token/refresh/")
+    suspend fun refreshToken()
 }

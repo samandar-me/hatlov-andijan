@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.sdk.data.manager.SharedPrefManager
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentMainBinding
 import com.sdk.hatlovandijon.ui.adapter.AppealAdapter
@@ -24,8 +23,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private val binding by viewBinding { FragmentMainBinding.bind(it) }
     private val viewModel: MainViewModel by viewModels()
     private val appealAdapter by lazy { AppealAdapter() }
-    @Inject
-    lateinit var sharedPrefManager: SharedPrefManager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeState()

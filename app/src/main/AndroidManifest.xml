@@ -18,24 +18,28 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HatlovAndijon">
+        android:theme="@style/Theme.HatlovAndijon"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.auth.LoginActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan"
+            android:name=".ui.no_internet.NoInternetActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MainTheme" />
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ui.auth.LoginActivity"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/MainTheme"-->
+<!--            android:windowSoftInputMode="adjustPan" />-->
+<!--        <activity-->
+<!--            android:name=".ui.main.MainActivity"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/MainTheme"-->
+<!--            android:windowSoftInputMode="adjustPan" />-->
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"
-            android:theme="@style/MainTheme" />
-        <activity
-            android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
@@ -45,6 +49,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".util.CheckInternetManager"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="anroid.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

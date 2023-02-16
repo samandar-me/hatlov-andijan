@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.sdk.data.database.AppDatabase
 import com.sdk.data.database.UserDao
+import com.sdk.data.manager.DataStoreManager
 import com.sdk.data.manager.RequestInterceptor
-import com.sdk.data.manager.SharedPrefManager
 import com.sdk.data.repository.PersistenceRepositoryImpl
 import com.sdk.domain.repository.PersistenceRepository
 import dagger.Module
@@ -20,17 +20,17 @@ import javax.inject.Singleton
 object PersistenceModule {
 
     @[Provides Singleton]
-    fun provideSharedPrefManager(@ApplicationContext context: Context): SharedPrefManager {
-        return SharedPrefManager(context)
+    fun provideDataStoreManager(@ApplicationContext context: Context): DataStoreManager {
+        return DataStoreManager(context)
     }
 
     @[Provides Singleton]
-    fun provideInterceptor(sharedPrefManager: SharedPrefManager): RequestInterceptor {
-        return RequestInterceptor(sharedPrefManager)
+    fun provideInterceptor(dataStoreManager: DataStoreManager): RequestInterceptor {
+        return RequestInterceptor(dataStoreManager)
     }
     @[Provides Singleton]
-    fun providePersistenceRepository(sharedPrefManager: SharedPrefManager, dao: UserDao): PersistenceRepository {
-        return PersistenceRepositoryImpl(sharedPrefManager, dao)
+    fun providePersistenceRepository(dataStoreManager: DataStoreManager, dao: UserDao): PersistenceRepository {
+        return PersistenceRepositoryImpl(dataStoreManager, dao)
     }
     @[Provides Singleton]
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {

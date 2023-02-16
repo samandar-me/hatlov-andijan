@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
                                 LoginActivityState.Error(status.message)
                             }
                             is Status.Success -> {
-                                allUseCases.saveTokenUseCase(Pair(status.data.access,status.data.userId))
+                                allUseCases.saveTokenUseCase(Triple(event.loginData,status.data.access, status.data.userId))
                                 allUseCases.saveUserUseCase(
                                     UserEntity(
                                         refreshToken = status.data.refresh,

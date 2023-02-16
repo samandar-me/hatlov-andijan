@@ -53,4 +53,5 @@
     <string name="success">Muvaffaqiyatli</string>
     <string name="error_message">Login yoki parol xato!</string>
     <string name="hello">Salom,</string>
+    <string name="no_internet">Intenet aloqasini tekshiring</string>
 </resources>

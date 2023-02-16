@@ -32,6 +32,7 @@ class MainRepositoryImpl @Inject constructor(
         emit(Status.Loading)
         try {
             val response = mainService.getAppeals()
+            println("@@@${response.code()}${response.body()}")
             if (response.isSuccessful) {
                 response.body()?.let {
                     emit(Status.Success(it))
