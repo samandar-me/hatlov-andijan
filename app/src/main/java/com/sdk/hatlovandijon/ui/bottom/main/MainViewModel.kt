@@ -1,11 +1,13 @@
 package com.sdk.hatlovandijon.ui.bottom.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sdk.data.manager.DataStoreManager
 import com.sdk.domain.model.UserEntity
 import com.sdk.domain.use_case.base.AllUseCases
 import com.sdk.domain.util.Status
+import com.sdk.hatlovandijon.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +29,7 @@ class MainViewModel @Inject constructor(
     init {
         onEvent(MainEvent.OnGetAppeals)
         viewModelScope.launch {
+            Log.d(TAG, "${dataStoreManager.getToken().first()}")
             useCases.getUserUseCase(dataStoreManager.getUserId().first()!!).collect {
                 _user.value = it
             }

@@ -4,15 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import com.sdk.domain.model.appeal.Murojaatlar
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentDetailBinding
@@ -20,7 +18,7 @@ import com.sdk.hatlovandijon.ui.adapter.DetailImageAdapter
 import com.sdk.hatlovandijon.ui.base.BaseFragment
 import com.sdk.hatlovandijon.util.viewBinding
 import kotlinx.coroutines.launch
-import java.util.Calendar
+import java.util.*
 
 
 class DetailFragment : BaseFragment(R.layout.fragment_detail) {
@@ -35,13 +33,9 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRv()
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
-        }
-        binding.rv.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = detailImageAdapter
         }
         binding.linearLocation.click {
 
@@ -67,6 +61,22 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
             }
         }
         observeState()
+    }
+
+    private fun setupRv() {
+        val compositeTrans = CompositePageTransformer()
+        compositeTrans.addTransformer(MarginPageTransformer(0))
+        compositeTrans.addTransformer { page, position ->
+            val r = 1 - kotlin.math.abs(position)
+            page.scaleY = 0.85f + r * 0.27f
+        }
+        binding.viewPager.apply {
+            adapter = detailImageAdapter
+            offscreenPageLimit = 3
+            clipToPadding = true
+            clipChildren = true
+            setPageTransformer(compositeTrans)
+        }
     }
 
     private fun observeState() {

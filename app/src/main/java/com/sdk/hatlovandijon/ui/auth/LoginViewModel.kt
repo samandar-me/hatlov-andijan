@@ -1,10 +1,12 @@
 package com.sdk.hatlovandijon.ui.auth
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sdk.domain.model.UserEntity
 import com.sdk.domain.use_case.base.AllUseCases
 import com.sdk.domain.util.Status
+import com.sdk.hatlovandijon.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,7 +39,9 @@ class LoginViewModel @Inject constructor(
                                 LoginActivityState.Error(status.message)
                             }
                             is Status.Success -> {
-                                allUseCases.saveTokenUseCase(Triple(event.loginData,status.data.access, status.data.userId))
+                                val user = Triple(event.loginData,status.data.access, status.data.userId)
+                                Log.d(TAG, "onEvent: $user")
+                                allUseCases.saveTokenUseCase(user)
                                 allUseCases.saveUserUseCase(
                                     UserEntity(
                                         refreshToken = status.data.refresh,

@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.Flow
 interface MainRepository {
     suspend fun getVariables(): Flow<Status<DataVariable>>
     suspend fun getAppeals(): Flow<Status<AppealResponse>>
-    suspend fun getDetailImages(id: Int): Flow<Status<List<DetailImage>>>
+    suspend fun getDetailImages(id: Int): Flow<List<DetailImage>?>
 }

@@ -61,8 +61,8 @@ class SplashViewModel @Inject constructor(
     }
 
     private suspend fun login() {
-        Log.d(TAG, "login: ")
         val user = dataStoreManager.getUser().first()
+        Log.d(TAG, "login: $user")
         useCases.loginUseCase(LoginData(user.userName, user.password)).collect { status ->
             when (status) {
                 is Status.Loading -> Unit

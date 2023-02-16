@@ -1,5 +1,6 @@
 package com.sdk.data.repository
 
+import android.util.Log
 import com.sdk.data.mapper.toVariableData
 import com.sdk.data.network.main.MainService
 import com.sdk.domain.model.DataVariable
@@ -8,6 +9,7 @@ import com.sdk.domain.model.detail.DetailImage
 import com.sdk.domain.repository.MainRepository
 import com.sdk.domain.util.Status
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -46,17 +48,11 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDetailImages(id: Int): Flow<Status<List<DetailImage>>> = flow {
-        emit(Status.Loading)
-        try {
-            val response = mainService.getDetailImages(id)
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    emit(Status.Success(it.images))
-                }
-            }
-        } catch (e: Exception) {
-            emit(Status.Error(e.toString()))
-        }
+    override suspend fun getDetailImages(id: Int): Flow<List<DetailImage>?> = flow {
+        val response = mainService.getDetailImages(id)
+        Log.d("@@@", "getDetailImages: ${response.code()}")
+        Log.d("@@@", "getDetailImages: ${response.body()}")
+        Log.d("@@@", "getDetailImages: $id}")
+        emit(response.body()?.detailData?.images)
     }
 }

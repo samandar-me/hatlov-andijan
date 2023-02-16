@@ -28,7 +28,6 @@ class ChartFragment : BaseFragment(
             findNavController().popBackStack()
         }
         binding.btnFilterSearch.click {
-            snack("Test", true)
             isBaseLinearVisible = !isBaseLinearVisible
             binding.baseLinear.isVisible = isBaseLinearVisible
 

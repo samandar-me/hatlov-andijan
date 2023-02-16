@@ -36,7 +36,7 @@ class DataStoreManager(private val context: Context) {
     suspend fun saveUser(loginData: LoginData) {
         context.dataStore.edit {
             it[USER_NAME] = loginData.userName
-            it[USER_NAME] = loginData.password
+            it[PASSWORD] = loginData.password
         }
     }
     fun getUser() = context.dataStore.data.map {

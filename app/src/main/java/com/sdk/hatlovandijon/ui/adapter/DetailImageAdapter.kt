@@ -51,7 +51,7 @@ class DetailImageAdapter :
         fun bind(image: DetailImage) {
             binding.imv.apply {
                 Glide.with(this)
-                    .load("${Constants.BASE_URL}${Constants.IMAGE_END}${image.image}")
+                    .load("${Constants.BASE_URL}${image.image}")
                     .addListener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(
                             e: GlideException?,

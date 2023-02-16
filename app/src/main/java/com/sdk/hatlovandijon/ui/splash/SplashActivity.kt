@@ -30,6 +30,7 @@ class SplashActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
+
         lifecycleScope.launchWhenResumed {
             viewModel.state.collect {
                 when (it) {
