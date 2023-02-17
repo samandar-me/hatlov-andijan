@@ -5,6 +5,7 @@ import com.sdk.domain.model.appeal.AppealResponse
 import com.sdk.domain.model.detail.DetailImageResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface MainService  {
@@ -18,4 +19,7 @@ interface MainService  {
     suspend fun getDetailImages(
         @Path("id") id: Int
     ): Response<DetailImageResponse>
+
+    @POST("api/v1/murojaat/add/")
+    suspend fun addAppeal()
 }

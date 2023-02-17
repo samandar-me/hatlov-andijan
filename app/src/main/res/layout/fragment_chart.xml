@@ -82,6 +82,8 @@
                                 android:id="@+id/etFromDate"
                                 android:layout_width="match_parent"
                                 android:gravity="center"
+                                android:paddingEnd="@dimen/_5sdp"
+                                android:drawableEnd="@drawable/baseline_calendar_month_24"
                                 android:layout_height="@dimen/_43sdp"
                                 android:inputType="none" />
 
@@ -120,6 +122,8 @@
                                 android:id="@+id/etToDate"
                                 android:layout_width="match_parent"
                                 android:inputType="none"
+                                android:paddingEnd="@dimen/_5sdp"
+                                android:drawableEnd="@drawable/baseline_calendar_month_24"
                                 android:gravity="center"
                                 android:layout_height="@dimen/_43sdp" />
 
