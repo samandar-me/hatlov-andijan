@@ -5,16 +5,16 @@ import com.sdk.data.mapper.toVariableData
 import com.sdk.data.network.main.MainService
 import com.sdk.domain.model.DataVariable
 import com.sdk.domain.model.appeal.AppealResponse
-import com.sdk.domain.model.detail.DetailImage
+import com.sdk.domain.model.detail.DetailResponse
+import com.sdk.domain.model.search.SearchData
+import com.sdk.domain.model.search.SearchResponse
 import com.sdk.domain.model.upload.AddAppealRequest
 import com.sdk.domain.repository.MainRepository
 import com.sdk.domain.util.Status
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
@@ -56,6 +56,7 @@ class MainRepositoryImpl @Inject constructor(
         flow {
             emit(Status.Loading)
             try {
+                Log.d("@@@", "addAppealRequest: $appealRequest")
                 val response = mainService.addAppeal(
                     appealRequest.address,
                     appealRequest.ownerHomeName,
@@ -87,11 +88,30 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getDetailImages(id: Int): Flow<List<DetailImage>?> = flow {
-        val response = mainService.getDetailImages(id)
-        Log.d("@@@", "getDetailImages: ${response.code()}")
-        Log.d("@@@", "getDetailImages: ${response.body()}")
-        Log.d("@@@", "getDetailImages: $id}")
-        emit(response.body()?.detailData?.images)
+    override suspend fun getDetailImages(id: Int): Flow<Status<DetailResponse>> = flow {
+        try {
+            emit(Status.Loading)
+            val response = mainService.getDetailData(id)
+            response.body()?.let {
+                if (it.success) {
+                    emit(Status.Success(it))
+                }
+            }
+        } catch (e: Exception) {
+            emit(Status.Error(e.toString()))
+        }
+    }
+
+    override suspend fun searchAppealType(query: String): Flow<List<SearchData>> = flow {
+        try {
+            val response = mainService.searchAppealType(query)
+            response.body()?.let {
+                if (it.success) {
+                    emit(it.data)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

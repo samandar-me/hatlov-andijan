@@ -14,20 +14,19 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.sdk.domain.model.appeal.Murojaatlar
-import com.sdk.domain.model.detail.DetailImage
+import com.sdk.domain.model.detail.Image
 import com.sdk.hatlovandijon.databinding.DetailImageItemBinding
 import com.sdk.hatlovandijon.databinding.ProblemItemBinding
 import com.sdk.hatlovandijon.util.Constants
 
 class DetailImageAdapter :
-    ListAdapter<DetailImage, DetailImageAdapter.DetailImageViewHolder>(DiffCallBack()) {
-    private class DiffCallBack : DiffUtil.ItemCallback<DetailImage>() {
-        override fun areItemsTheSame(oldItem: DetailImage, newItem: DetailImage): Boolean {
+    ListAdapter<Image, DetailImageAdapter.DetailImageViewHolder>(DiffCallBack()) {
+    private class DiffCallBack : DiffUtil.ItemCallback<Image>() {
+        override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: DetailImage, newItem: DetailImage): Boolean {
+        override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
             return oldItem == newItem
         }
     }
@@ -48,7 +47,7 @@ class DetailImageAdapter :
 
     inner class DetailImageViewHolder(private val binding: DetailImageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(image: DetailImage) {
+        fun bind(image: Image) {
             binding.imv.apply {
                 Glide.with(this)
                     .load("${Constants.BASE_URL}${image.image}")

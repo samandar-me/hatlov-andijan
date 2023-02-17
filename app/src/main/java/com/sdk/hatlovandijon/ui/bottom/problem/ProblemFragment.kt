@@ -9,9 +9,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -29,6 +31,8 @@ import com.sdk.hatlovandijon.ui.base.BaseFragment
 import com.sdk.hatlovandijon.ui.bottom.add.AddData
 import com.sdk.hatlovandijon.util.Constants.TAG
 import com.sdk.hatlovandijon.util.viewBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -40,7 +44,9 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
     private val imageAdapter by lazy { ImageAdapter() }
     private var addData: AddData? = null
     private val viewModel: ProblemViewModel by viewModels()
+    private var job: Job? = null
 
+    private var typeInt: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addData = arguments?.getParcelable("add_data")
@@ -66,14 +72,25 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
             }
         }
         setupEditTexts()
+        searchAutoComplete()
         binding.btnSave.setOnClickListener {
             uploadAppeal()
         }
         observeState()
+        lifecycleScope.launch {
+            viewModel.searchData.collect { list ->
+                val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list.map { it.name })
+                binding.etAutoComplete.setAdapter(arrayAdapter)
+                binding.etAutoComplete.setOnItemClickListener { _, _, position, _ ->
+
+                }
+            }
+        }
     }
 
     private fun uploadAppeal() {
         val comment = binding.etDesc.text.toString().trim()
+        val type = binding.etAutoComplete.text.toString()
         addData?.let { data ->
             val appealRequest = AddAppealRequest(
                 data.address,
@@ -86,13 +103,17 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                 data.speakerYear,
                 data.speakerGender,
                 data.speakerPhone,
-                1,
+                0,
                 comment,
                 imageAdapter.uriList.map {
                     File(imageFile(it))
                 }
             )
-            viewModel.onEvent(ProblemEvent.OnSaveAppeal(appealRequest))
+            if (type.isNotBlank() && comment.isNotBlank()) {
+                viewModel.onEvent(ProblemEvent.OnSaveAppeal(appealRequest))
+            } else {
+                snack(getString(R.string.enter_correct_data), false)
+            }
         }
     }
 
@@ -100,6 +121,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
         lifecycleScope.launch {
             viewModel.state.collect {
                 when(it) {
+                    is ProblemState.Idle -> Unit
                     is ProblemState.Loading -> {
                         binding.pr.isVisible = true
                         binding.btnSave.isVisible = false
@@ -110,7 +132,10 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                         binding.btnSave.isVisible = true
                     }
                     is ProblemState.Success -> {
+                        binding.pr.isVisible = false
+                        binding.btnSave.isVisible = true
                         toast(getString(R.string.uploaded))
+                        findNavController().navigate(R.id.action_problemFragment_to_mainFragment)
                     }
                 }
             }
@@ -202,13 +227,29 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
 
     private fun setupEditTexts() {
         binding.apply {
-            val editTextList = mapOf(
-                etProblemTitle to tvProblemTitle,
-                etDesc to tvDesc
-            )
-            editTextList.forEach {
-                it.key.sutUpInput(it.value)
+            etDesc.sutUpInput(binding.tvDesc)
+            etAutoComplete.setUpInput(binding.tvProblemTitle)
+        }
+    }
+    private fun searchAutoComplete() {
+        binding.etAutoComplete.addTextChangedListener { editable ->
+            job?.cancel()
+            if (editable != null && editable.toString().isNotBlank()) {
+                job = lifecycleScope.launch {
+                    delay(700L)
+                    viewModel.onEvent(ProblemEvent.OnSearchAppealType(editable.toString().trim().lowercase()))
+                }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        job?.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        job?.cancel()
     }
 }

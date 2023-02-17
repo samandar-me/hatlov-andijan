@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -12,10 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.sdk.domain.model.appeal.Murojaatlar
+import com.sdk.domain.model.detail.Data
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentDetailBinding
 import com.sdk.hatlovandijon.ui.adapter.DetailImageAdapter
 import com.sdk.hatlovandijon.ui.base.BaseFragment
+import com.sdk.hatlovandijon.util.Constants.TAG
+import com.sdk.hatlovandijon.util.splitText
 import com.sdk.hatlovandijon.util.viewBinding
 import kotlinx.coroutines.launch
 import java.util.*
@@ -23,42 +27,22 @@ import java.util.*
 
 class DetailFragment : BaseFragment(R.layout.fragment_detail) {
     private val binding by viewBinding { FragmentDetailBinding.bind(it) }
-    private var appeal: Murojaatlar? = null
+    private var id: Int? = null
     private val detailImageAdapter by lazy { DetailImageAdapter() }
     private val viewModel: DetailViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appeal = arguments?.getSerializable("appeal") as? Murojaatlar
+        id = arguments?.getInt("id")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        id?.let {
+            viewModel.onEvent(DetailEvent.OnGetDetailData(it))
+        }
         setupRv()
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
-        }
-        binding.linearLocation.click {
-
-        }
-        binding.linearNumber.click {
-            appeal?.let {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse("tel:${it.owner_home_phone}")
-                startActivity(intent)
-            }
-        }
-        binding.apply {
-            appeal?.let {
-                viewModel.onEvent(DetailEvent.OnGetDetailImages(it.id))
-                tvFullName.text = it.owner_home_name
-                toolbar.title = it.owner_home_name
-                toolbar.subtitle = it.mahalla
-                val year = Calendar.getInstance().get(Calendar.YEAR)
-                tvAge.text = (year - it.owner_home_year).toString()
-                cardView.setCardBackgroundColor(Color.parseColor(it.turi.color))
-                cardTv.text = it.izoh
-                tvBtn.text = it.status.name
-            }
         }
         observeState()
     }
@@ -89,10 +73,25 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
                     }
                     is DetailState.Success -> {
                         binding.pr.isVisible = false
-                        detailImageAdapter.submitList(it.images)
+                        detailImageAdapter.submitList(it.detailData.data.images)
+                        showUI(it.detailData.data)
                     }
                 }
             }
+        }
+    }
+
+    private fun showUI(data: Data) {
+        binding.apply {
+            toolbar.title = data.owner_home_name.splitText()
+            toolbar.subtitle = data.mahalla.splitText()
+            tvFullName.text = data.owner_home_name.splitText()
+            tvAge.text = data.owner_home_year.toString().splitText()
+            tvGen.text = data.owner_home_jinsi.splitText()
+            cardTv.text = data.izoh.splitText()
+            tvLoc.text = data.address.splitText()
+            tvPhone.text = data.owner_home_phone.splitText()
+            cardView.setCardBackgroundColor(Color.parseColor(data.turi.color))
         }
     }
 }

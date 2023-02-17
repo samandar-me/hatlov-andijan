@@ -5,3 +5,6 @@ object Constants {
     const val IMAGE_END = "media/murojaat-image/"
     const val TAG = "@@@"
 }
+fun String.splitText(): String {
+    return this.replace("\"", "")
+}

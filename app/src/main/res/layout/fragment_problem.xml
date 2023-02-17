@@ -57,7 +57,7 @@
                     android:id="@+id/etLayPrTitle"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
                     app:boxCornerRadiusBottomStart="@dimen/_8sdp"
@@ -65,9 +65,10 @@
                     app:boxCornerRadiusTopStart="@dimen/_8sdp"
                     app:boxStrokeColor="@color/blue">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etProblemTitle"
+                    <AutoCompleteTextView
+                        android:id="@+id/etAutoComplete"
                         android:layout_width="match_parent"
+                        android:paddingHorizontal="@dimen/_10sdp"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/poppins_semibold"
                         android:textSize="@dimen/_11sdp" />

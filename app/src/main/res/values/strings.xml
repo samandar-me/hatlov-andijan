@@ -55,4 +55,5 @@
     <string name="hello">Salom,</string>
     <string name="no_internet">Intenet aloqasini tekshiring!</string>
     <string name="uploaded">Yuborildi</string>
+    <string name="enter_correct_data">Ma\'lumotlarni to\'g\'ri kiriting!</string>
 </resources>

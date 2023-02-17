@@ -76,7 +76,7 @@ abstract class BaseFragment(
             }
         }
     }
-    fun AutoCompleteTextView.sutUpInput(title: TextView) {
+    fun AutoCompleteTextView.setUpInput(title: TextView) {
         this.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 title.setTextColor(

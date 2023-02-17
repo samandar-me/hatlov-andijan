@@ -26,6 +26,8 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
             binding.tvInterviewer.textColor(if (isVisible) R.color.gray else R.color.blue)
         }
         binding.btnContinue.click {
+            findNavController().navigate(R.id.action_addFragment_to_problemFragment)
+            /*
             val streetName = binding.etStreetName.text.toString().trim()
             val homeAddress = binding.etHomeAddress.text.toString().trim()
             val ownerHomeName = binding.etHomeBoss.text.toString().trim()
@@ -54,8 +56,13 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
                 val bundle = bundleOf("add_data" to addData)
                 findNavController().navigate(R.id.action_addFragment_to_problemFragment, bundle)
             } catch (e: Exception) {
+                snack(getString(R.string.enter_correct_data), false)
                 e.printStackTrace()
+
+
             }
+
+             */
         }
     }
 

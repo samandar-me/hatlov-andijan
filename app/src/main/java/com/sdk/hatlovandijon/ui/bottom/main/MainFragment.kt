@@ -33,7 +33,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             adapter = appealAdapter
         }
         appealAdapter.onClick = {
-            val bundle = bundleOf("appeal" to it)
+            val bundle = bundleOf("id" to it)
             findNavController().navigate(R.id.action_mainFragment_to_detailFragment, bundle)
         }
     }

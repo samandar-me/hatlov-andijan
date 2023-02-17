@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sdk.domain.model.appeal.Murojaatlar
 import com.sdk.hatlovandijon.databinding.ProblemItemBinding
+import com.sdk.hatlovandijon.util.splitText
 
 class AppealAdapter: ListAdapter<Murojaatlar, AppealAdapter.AppealViewHolder>(DiffCallBack()) {
-    lateinit var onClick: (Murojaatlar) -> Unit
+    lateinit var onClick: (Int) -> Unit
     private class DiffCallBack: DiffUtil.ItemCallback<Murojaatlar>() {
         override fun areItemsTheSame(oldItem: Murojaatlar, newItem: Murojaatlar): Boolean {
             return oldItem.id == newItem.id
@@ -38,15 +39,15 @@ class AppealAdapter: ListAdapter<Murojaatlar, AppealAdapter.AppealViewHolder>(Di
     inner class AppealViewHolder(private val binding: ProblemItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(murojaat: Murojaatlar) {
             binding.apply {
-                tvName.text = murojaat.owner_home_name
-                textPro.text = murojaat.status.name
+                tvName.text = murojaat.owner_home_name.splitText()
+                textPro.text = murojaat.status.name.splitText()
                 cardView.setCardBackgroundColor(Color.parseColor(murojaat.turi.color))
-                textProblem.text = murojaat.izoh
-                textAddress.text = murojaat.address
-                textTime.text = murojaat.deadline
+                textProblem.text = murojaat.izoh.splitText()
+                textAddress.text = murojaat.address.splitText()
+                textTime.text = murojaat.deadline.splitText()
             }
             itemView.setOnClickListener {
-                onClick(murojaat)
+                onClick(murojaat.id)
             }
         }
     }

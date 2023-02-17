@@ -29,7 +29,6 @@ class MainViewModel @Inject constructor(
     init {
         onEvent(MainEvent.OnGetAppeals)
         viewModelScope.launch {
-            Log.d(TAG, "${dataStoreManager.getToken().first()}")
             useCases.getUserUseCase(dataStoreManager.getUserId().first()!!).collect {
                 _user.value = it
             }

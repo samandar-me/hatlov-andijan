@@ -2,17 +2,17 @@ package com.sdk.data.network.main
 
 import com.sdk.data.model.VariablesResponse
 import com.sdk.domain.model.appeal.AppealResponse
-import com.sdk.domain.model.detail.DetailImageResponse
+import com.sdk.domain.model.detail.DetailResponse
+import com.sdk.domain.model.search.SearchResponse
 import com.sdk.domain.model.upload.AddAppealResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MainService {
     @GET("api/v1/variables/")
@@ -22,9 +22,9 @@ interface MainService {
     suspend fun getAppeals(): Response<AppealResponse>
 
     @GET("api/v1/murojaat/detail/{id}")
-    suspend fun getDetailImages(
+    suspend fun getDetailData(
         @Path("id") id: Int
-    ): Response<DetailImageResponse>
+    ): Response<DetailResponse>
 
     @POST("api/v1/murojaat/add/")
     @Multipart
@@ -43,4 +43,9 @@ interface MainService {
         @Part("izoh") comment: String,
         @Part images: List<MultipartBody.Part>
     ): Response<AddAppealResponse>
+
+    @GET("api/v1/murojaat/turi/")
+    suspend fun searchAppealType(
+        @Query("search") query: String
+    ): Response<SearchResponse>
 }
