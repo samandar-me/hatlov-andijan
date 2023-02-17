@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sdk.hatlovandijon.databinding.ImageLayoutBinding
 
 class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
-    private var uriList = mutableListOf<Uri>()
+    var uriList = mutableListOf<Uri>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         return ImageViewHolder(
             ImageLayoutBinding.inflate(

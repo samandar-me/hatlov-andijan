@@ -327,11 +327,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:checked="true"
-                android:textAlignment="center"
                 android:buttonTint="@color/blue"
+                android:checked="true"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/interview_del"
+                android:textAlignment="center"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/_10sdp" />
 
@@ -474,7 +474,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/hint_last_name"
+                            android:text="@string/gender"
                             android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -490,7 +490,7 @@
                             app:boxStrokeColor="@color/blue">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etIntLastName"
+                                android:id="@+id/etIntGen"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
 

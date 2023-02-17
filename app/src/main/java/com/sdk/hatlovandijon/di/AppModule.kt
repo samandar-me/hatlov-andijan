@@ -51,7 +51,7 @@ object AppModule {
             connectTimeout(30, TimeUnit.SECONDS)
             readTimeout(30, TimeUnit.SECONDS)
             writeTimeout(30, TimeUnit.SECONDS)
-           // addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
             addInterceptor(requestInterceptor)
         }.build()
     }
@@ -74,7 +74,8 @@ object AppModule {
             getAppealsUseCase = GetAppealsUseCase(mainRepository),
             getUserUseCase = GetUserUseCase(persistenceRepository),
             saveUserUseCase = SaveUserUseCase(persistenceRepository),
-            getDetailImagesUseCase = GetDetailImagesUseCase(mainRepository)
+            getDetailImagesUseCase = GetDetailImagesUseCase(mainRepository),
+            addAppealUseCase = AddAppealUseCase(mainRepository)
         )
     }
 

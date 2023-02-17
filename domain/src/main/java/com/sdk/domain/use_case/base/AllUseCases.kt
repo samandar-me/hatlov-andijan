@@ -10,5 +10,6 @@ data class AllUseCases(
     val getAppealsUseCase: GetAppealsUseCase,
     val saveUserUseCase: SaveUserUseCase,
     val getUserUseCase: GetUserUseCase,
-    val getDetailImagesUseCase: GetDetailImagesUseCase
+    val getDetailImagesUseCase: GetDetailImagesUseCase,
+    val addAppealUseCase: AddAppealUseCase
 )
