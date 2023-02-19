@@ -26,7 +26,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_14sdp"
+        android:paddingHorizontal="@dimen/_14sdp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -38,6 +38,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"/>
 
             <LinearLayout
                 android:id="@+id/baseLinear"
@@ -165,7 +169,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:inputType="none"
                             android:paddingStart="@dimen/_34sdp"
-                            android:text="@string/process"
+                            android:text="@string/viewing"
                             android:textAlignment="center" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -175,21 +179,43 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_20sdp" />
+
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFilterSearch"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/poppins_semibold"
-                android:padding="@dimen/_15sdp"
-                android:text="@string/filter"
-                android:textAllCaps="false"
-                android:textColor="@color/blue"
-                app:cornerRadius="@dimen/_8sdp"
-                app:strokeColor="@color/blue"
-                app:strokeWidth="@dimen/_1sdp" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFilterSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="@dimen/_15sdp"
+                    android:text="@string/filter"
+                    android:textAllCaps="false"
+                    android:textColor="@color/blue"
+                    app:cornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/blue"
+                    app:strokeWidth="@dimen/_1sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/blue"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="@dimen/_15sdp"
+                    android:text="@string/search"
+                    android:visibility="invisible"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:cornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/blue"
+                    app:strokeWidth="@dimen/_1sdp" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/textView"
@@ -203,10 +229,125 @@
 
         </LinearLayout>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_marginTop="@dimen/_10sdp"
+            android:id="@+id/shimmer"
+            android:layout_width="match_parent"
+            app:shimmer_auto_start="false"
+            android:visibility="invisible"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false">
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:baselineAligned="false">
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:baselineAligned="false">
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:baselineAligned="false">
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            layout="@layout/shimmer_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

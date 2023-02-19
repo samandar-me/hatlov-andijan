@@ -1,8 +1,10 @@
 package com.sdk.hatlovandijon.ui.base
 
+import android.os.Bundle
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar

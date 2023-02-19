@@ -56,4 +56,10 @@
     <string name="no_internet">Intenet aloqasini tekshiring!</string>
     <string name="uploaded">Yuborildi</string>
     <string name="enter_correct_data">Ma\'lumotlarni to\'g\'ri kiriting!</string>
+    <string name="female">Ayol</string>
+    <string name="refresh">Qayta ko\'rish</string>
+    <string name="internet_no">Internet mavjud emas!</string>
+    <string name="error_occ">Xatolik yuz berdi</string>
+    <string name="enter_query">So\'rov kiriting!</string>
+    <string name="viewing">Ko\'rib chiqilmoqda</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.sdk.hatlovandijon.ui.adapter
 
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,14 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.sdk.domain.model.detail.Image
 import com.sdk.hatlovandijon.databinding.DetailImageItemBinding
-import com.sdk.hatlovandijon.databinding.ProblemItemBinding
 import com.sdk.hatlovandijon.util.Constants
 
 class DetailImageAdapter :

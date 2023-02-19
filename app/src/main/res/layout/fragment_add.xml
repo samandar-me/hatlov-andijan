@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.bottom.add.AddFragment">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -261,9 +260,9 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etLayGen"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_47sdp"
                         android:layout_marginTop="@dimen/_2sdp"
                         app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
                         app:boxCornerRadiusBottomStart="@dimen/_8sdp"
@@ -271,11 +270,11 @@
                         app:boxCornerRadiusTopStart="@dimen/_8sdp"
                         app:boxStrokeColor="@color/blue">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etGen"
+                        <AutoCompleteTextView
+                            android:id="@+id/etOwnerGen"
                             android:layout_width="match_parent"
-                            android:inputType="number"
-                            android:layout_height="wrap_content" />
+                            android:inputType="none"
+                            android:layout_height="match_parent" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -482,10 +481,10 @@
                             android:textSize="@dimen/_9sdp" />
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/etLayIntLastName"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:id="@+id/etIntLayGen"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_47sdp"
                             android:layout_marginTop="@dimen/_2sdp"
                             app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
                             app:boxCornerRadiusBottomStart="@dimen/_8sdp"
@@ -493,11 +492,11 @@
                             app:boxCornerRadiusTopStart="@dimen/_8sdp"
                             app:boxStrokeColor="@color/blue">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etIntGen"
+                            <AutoCompleteTextView
+                                android:id="@+id/etSpeakerGen"
                                 android:layout_width="match_parent"
-                                android:inputType="number"
-                                android:layout_height="wrap_content" />
+                                android:inputType="none"
+                                android:layout_height="match_parent" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 

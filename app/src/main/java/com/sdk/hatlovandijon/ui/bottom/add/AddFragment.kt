@@ -2,6 +2,7 @@ package com.sdk.hatlovandijon.ui.bottom.add
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -23,29 +24,27 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
             isVisible = !isVisible
             binding.tvInterviewer.isChecked = !isVisible
             binding.linearInterviewer.isVisible = isVisible
-            binding.tvInterviewer.textColor(if (isVisible) R.color.gray else R.color.blue)
+           binding.tvInterviewer.textColor(if (isVisible) R.color.gray else R.color.blue)
         }
         binding.btnContinue.click {
-            findNavController().navigate(R.id.action_addFragment_to_problemFragment)
-            /*
             val streetName = binding.etStreetName.text.toString().trim()
             val homeAddress = binding.etHomeAddress.text.toString().trim()
             val ownerHomeName = binding.etHomeBoss.text.toString().trim()
+            val ownerGen = binding.etOwnerGen.text.toString().trim()
             val ownerHomeLastName = binding.etHomeBossLastName.text.toString().trim()
             val ownerYear = binding.etAge.text.toString().trim()
-            val ownerGender = binding.etGen.text.toString().trim()
             val ownerNumber = binding.etNumber.text.toString().trim()
             val speakerName = binding.etName.text.toString().trim()
             val speakerLastName = binding.etLastName.text.toString().trim()
             val speakerAge = binding.etIntAge.text.toString().trim()
-            val speakerGen = binding.etIntGen.text.toString().trim()
+            val speakerGen = binding.etSpeakerGen.text.toString().trim()
             val speakerNumber = binding.etIntNumber.text.toString().trim()
             try {
                 val addData = AddData(
                     address = "$streetName, $homeAddress",
                     ownerHomeName = "$ownerHomeName $ownerHomeLastName",
                     ownerHomeYear = ownerYear.toInt(),
-                    ownerHomeGender = ownerGender.toInt(),
+                    ownerHomeGender = if (ownerGen == getString(R.string.male)) 1 else 0,
                     ownerHomePhone = ownerNumber,
                     ownerAsSpeaker = if (binding.tvInterviewer.isChecked) 1 else 0,
                     speakerName = "$speakerName $speakerLastName",
@@ -58,11 +57,12 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
             } catch (e: Exception) {
                 snack(getString(R.string.enter_correct_data), false)
                 e.printStackTrace()
-
-
             }
-
-             */
+        }
+        binding.apply {
+        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listOf(getString(R.string.male), getString(R.string.female)))
+            etSpeakerGen.setAdapter(arrayAdapter)
+            etOwnerGen.setAdapter(arrayAdapter)
         }
     }
 
@@ -73,7 +73,6 @@ class AddFragment : BaseFragment(R.layout.fragment_add) {
                 etHomeAddress to tvHomeAddress,
                 etHomeBoss to tvHomeBoss,
                 etAge to tvAge,
-                etGen to tvGen,
                 etNumber to tvNumber,
                 etName to tvName,
                 etLastName to tvLastName,

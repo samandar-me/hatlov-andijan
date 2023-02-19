@@ -1,8 +1,9 @@
 package com.sdk.data.network.main
 
-import com.sdk.data.model.VariablesResponse
+import com.sdk.domain.model.VariablesResponse
 import com.sdk.domain.model.appeal.AppealResponse
 import com.sdk.domain.model.detail.DetailResponse
+import com.sdk.domain.model.filter.FilterResponse
 import com.sdk.domain.model.search.SearchResponse
 import com.sdk.domain.model.upload.AddAppealResponse
 import okhttp3.MultipartBody
@@ -13,6 +14,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface MainService {
     @GET("api/v1/variables/")
@@ -48,4 +50,10 @@ interface MainService {
     suspend fun searchAppealType(
         @Query("search") query: String
     ): Response<SearchResponse>
+
+    @GET("api/v1/murojaat/")
+    @JvmSuppressWildcards
+    suspend fun searchAppeal(
+        @QueryMap map: Map<String, Any>
+    ): Response<FilterResponse>
 }

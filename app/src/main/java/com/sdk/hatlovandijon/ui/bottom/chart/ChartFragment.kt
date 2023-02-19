@@ -2,46 +2,63 @@ package com.sdk.hatlovandijon.ui.bottom.chart
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.map
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentChartBinding
+import com.sdk.hatlovandijon.ui.adapter.FilterAdapter
 import com.sdk.hatlovandijon.ui.base.BaseFragment
+import com.sdk.hatlovandijon.util.Constants.TAG
 import com.sdk.hatlovandijon.util.viewBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class ChartFragment : BaseFragment(
     R.layout.fragment_chart
 ) {
     private val binding by viewBinding { FragmentChartBinding.bind(it) }
+    private val filterAdapter by lazy { FilterAdapter() }
+    private val viewModel: ChartViewModel by viewModels()
+    private var type = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpAutoComplete()
         setUpEditTexts()
-        var isBaseLinearVisible = false
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
         binding.btnFilterSearch.click {
-            isBaseLinearVisible = !isBaseLinearVisible
-            binding.baseLinear.isVisible = isBaseLinearVisible
-
-            binding.btnFilterSearch.apply {
-                text = if (isBaseLinearVisible) {
-                    setBackColor(R.color.blue)
-                    setTextColor(Color.WHITE)
-                    getString(R.string.search_f)
-                } else {
-                    setBackColor(R.color.white)
-                    setTextColor(Color.BLUE)
-                    getText(R.string.filter)
-                }
-            }
+            binding.btnFilterSearch.isVisible = false
+            binding.baseLinear.isVisible = true
+            binding.btnSearch.isVisible = true
+        }
+        binding.btnSearch.click {
+            filterAppeals()
+        }
+        binding.rv.apply {
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            adapter = filterAdapter
+        }
+        filterAdapter.onClick = {
+            val bundle = bundleOf("id" to it)
+            findNavController().navigate(R.id.action_chartFragment_to_detailFragment, bundle)
         }
     }
 
@@ -67,20 +84,35 @@ class ChartFragment : BaseFragment(
     }
 
     private fun setUpAutoComplete() {
-        var text = getString(R.string.process)
-        var arrayAdapter = ArrayAdapter(
-            requireContext(), android.R.layout.simple_list_item_1,
-            listOf(text)
-        )
-        binding.autoCompleteTv.setAdapter(arrayAdapter)
-        binding.autoCompleteTv.click {
-            text =
-                if (text == getString(R.string.process)) getString(R.string.completed) else getString(R.string.process)
-            arrayAdapter = ArrayAdapter(
-                requireContext(), android.R.layout.simple_list_item_1,
-                listOf(text)
-            )
-            binding.autoCompleteTv.setAdapter(arrayAdapter)
+        lifecycleScope.launchWhenResumed {
+            viewModel.variableList.collect { list ->
+                val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list.map { it.name })
+                binding.autoCompleteTv.setAdapter(arrayAdapter)
+                binding.autoCompleteTv.setOnItemClickListener { _, _, position, _ ->
+                    type = list[position].id
+                }
+            }
+        }
+    }
+
+    private fun filterAppeals() {
+        lifecycleScope.launch {
+            viewModel.filterAppeals(queryMap())
+                .onStart {
+                    binding.rv.isVisible = false
+                    binding.shimmer.isVisible = true
+                    binding.shimmer.startShimmer()
+                    delay(800L)
+                }
+                .catch {
+                    snack(getString(R.string.error_occ), false)
+                }
+                .collectLatest {
+                    binding.shimmer.stopShimmer()
+                    binding.shimmer.isVisible = false
+                    binding.rv.isVisible = true
+                filterAdapter.submitData(it)
+            }
         }
     }
 
@@ -94,12 +126,19 @@ class ChartFragment : BaseFragment(
         datePicker.addOnPositiveButtonClickListener {
             val timeZoneUTC: TimeZone = TimeZone.getDefault()
             val offsetFromUTC: Int = timeZoneUTC.getOffset(Date().time) * -1
-            val simpleFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val simpleFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val date1 = Date(it.first + offsetFromUTC)
             val date2 = Date(it.second + offsetFromUTC)
             binding.etFromDate.setText(simpleFormat.format(date1))
             binding.etToDate.setText(simpleFormat.format(date2))
         }
         datePicker.show(childFragmentManager, "Date_Range")
+    }
+    private fun queryMap(): HashMap<String, Any> {
+        return hashMapOf(
+            "date_start" to binding.etFromDate.text.toString(),
+            "date_end" to binding.etToDate.text.toString(),
+            "turi" to type
+        )
     }
 }

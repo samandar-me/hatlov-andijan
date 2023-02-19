@@ -4,6 +4,7 @@ import com.sdk.data.database.UserDao
 import com.sdk.data.manager.DataStoreManager
 import com.sdk.domain.model.LoginData
 import com.sdk.domain.model.UserEntity
+import com.sdk.domain.model.VariableStatus
 import com.sdk.domain.repository.PersistenceRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -46,6 +46,7 @@ dependencies {
     implementation Dependencies.GsonConverter
     implementation Dependencies.Okhttp
     implementation Dependencies.Interceptor
+    implementation Dependencies.Paging
 
     //Dagger - Hilt
     implementation Dependencies.Hilt

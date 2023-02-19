@@ -1,13 +1,12 @@
 package com.sdk.data.repository
 
 import android.util.Log
-import com.sdk.data.mapper.toVariableData
 import com.sdk.data.network.main.MainService
-import com.sdk.domain.model.DataVariable
+import com.sdk.domain.model.VariableStatus
 import com.sdk.domain.model.appeal.AppealResponse
+import com.sdk.domain.model.appeal.Murojaatlar
 import com.sdk.domain.model.detail.DetailResponse
 import com.sdk.domain.model.search.SearchData
-import com.sdk.domain.model.search.SearchResponse
 import com.sdk.domain.model.upload.AddAppealRequest
 import com.sdk.domain.repository.MainRepository
 import com.sdk.domain.util.Status
@@ -20,7 +19,7 @@ import javax.inject.Inject
 class MainRepositoryImpl @Inject constructor(
     private val mainService: MainService
 ) : MainRepository {
-    override suspend fun getVariables(): Flow<Status<DataVariable>> = flow {
+    override suspend fun getVariables(): Flow<Status<List<VariableStatus>>> = flow {
         emit(Status.Loading)
         try {
             val response = mainService.getVariables()
@@ -29,7 +28,7 @@ class MainRepositoryImpl @Inject constructor(
             } else {
                 response.body().let {
                     if (it?.success!!) {
-                        emit(Status.Success(it.toVariableData()))
+                        emit(Status.Success(it.data.status))
                     }
                 }
             }
@@ -112,6 +111,19 @@ class MainRepositoryImpl @Inject constructor(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    override suspend fun searchAppealDashboard(query: String): Flow<Status<List<Murojaatlar>>> = flow {
+        emit(Status.Loading)
+        try  {
+            val mapQuery = mapOf("search" to query)
+             val response = mainService.searchAppeal(mapQuery)
+            response.body()?.let {
+                emit(Status.Success(it.data.result))
+            }
+        }catch (e: Exception) {
+            emit(Status.Error(e.toString()))
         }
     }
 }

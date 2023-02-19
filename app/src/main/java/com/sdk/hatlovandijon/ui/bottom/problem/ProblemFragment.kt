@@ -82,7 +82,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                 val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list.map { it.name })
                 binding.etAutoComplete.setAdapter(arrayAdapter)
                 binding.etAutoComplete.setOnItemClickListener { _, _, position, _ ->
-
+                    typeInt = list[position].id
                 }
             }
         }
@@ -103,7 +103,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                 data.speakerYear,
                 data.speakerGender,
                 data.speakerPhone,
-                0,
+                typeInt,
                 comment,
                 imageAdapter.uriList.map {
                     File(imageFile(it))
@@ -236,7 +236,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
             job?.cancel()
             if (editable != null && editable.toString().isNotBlank()) {
                 job = lifecycleScope.launch {
-                    delay(700L)
+                    delay(200L)
                     viewModel.onEvent(ProblemEvent.OnSearchAppealType(editable.toString().trim().lowercase()))
                 }
             }

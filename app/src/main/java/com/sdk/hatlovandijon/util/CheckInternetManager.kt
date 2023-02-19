@@ -10,7 +10,6 @@ import com.sdk.hatlovandijon.ui.no_internet.NoInternetActivity
 class CheckInternetManager : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (!hasInternet(context)) {
-            Toast.makeText(context, context?.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
             context?.startActivity(Intent(context, NoInternetActivity::class.java))
         }
     }

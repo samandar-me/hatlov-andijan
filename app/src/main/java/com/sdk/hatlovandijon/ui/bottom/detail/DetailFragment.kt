@@ -5,6 +5,9 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -44,9 +47,11 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+        binding.btnEdit.click {
+            findNavController().navigate(R.id.action_detailFragment_to_editAppealFragment)
+        }
         observeState()
     }
-
     private fun setupRv() {
         val compositeTrans = CompositePageTransformer()
         compositeTrans.addTransformer(MarginPageTransformer(0))
@@ -92,6 +97,12 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
             tvLoc.text = data.address.splitText()
             tvPhone.text = data.owner_home_phone.splitText()
             cardView.setCardBackgroundColor(Color.parseColor(data.turi.color))
+
+            binding.linearNumber.click {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("tel:$${data.owner_home_phone.splitText()}")
+                startActivity(intent)
+            }
         }
     }
 }

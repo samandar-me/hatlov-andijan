@@ -76,7 +76,8 @@ object AppModule {
             saveUserUseCase = SaveUserUseCase(persistenceRepository),
             getDetailImagesUseCase = GetDetailImagesUseCase(mainRepository),
             addAppealUseCase = AddAppealUseCase(mainRepository),
-            searchAppealTypeUseCase = SearchAppealTypeUseCase(mainRepository)
+            searchAppealTypeUseCase = SearchAppealTypeUseCase(mainRepository),
+            searchAppealDashboardUseCase = SearchAppealDashboardUseCase(mainRepository)
         )
     }
 

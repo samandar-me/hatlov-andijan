@@ -1,6 +1,7 @@
 package com.sdk.hatlovandijon.ui.splash
 
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import com.sdk.hatlovandijon.ui.auth.LoginActivity
 import com.sdk.hatlovandijon.ui.base.BaseActivity
 import com.sdk.hatlovandijon.ui.main.MainActivity
 import com.sdk.hatlovandijon.ui.no_internet.NoInternetActivity
+import com.sdk.hatlovandijon.util.CheckInternetManager
 import com.sdk.hatlovandijon.util.Constants.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -31,13 +33,14 @@ class SplashActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
+        val checkInternetManager = CheckInternetManager()
+        val intent = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
+        registerReceiver(checkInternetManager, intent)
+
         lifecycleScope.launchWhenResumed {
             viewModel.state.collect {
                 when (it) {
                     is SplashState.Idle -> Unit
-                    is SplashState.NoInternet -> {
-                        startActivity(Intent(this@SplashActivity, NoInternetActivity::class.java))
-                    }
                     is SplashState.UserAuthed -> {
                         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                         finish()
@@ -49,5 +52,10 @@ class SplashActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        viewModel.checkForUser()
     }
 }

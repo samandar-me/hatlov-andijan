@@ -39,7 +39,7 @@ object PersistenceModule {
             context,
             AppDatabase::class.java,
             "App.Db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
     @[Provides Singleton]
     fun provideUserDao(database: AppDatabase): UserDao {

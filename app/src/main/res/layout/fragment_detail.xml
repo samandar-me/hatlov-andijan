@@ -9,22 +9,39 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:elevation="0dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:background="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingStart="@dimen/_4sdp"
-            app:navigationIcon="@drawable/arrow_back"
-            app:subtitle="@string/name"
-            app:subtitleTextAppearance="@style/SubTextStyle"
-            app:title="@string/name"
-            app:titleMarginStart="@dimen/_20sdp"
-            app:titleTextAppearance="@style/TextStyle" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_60sdp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/_4sdp"
+                app:navigationIcon="@drawable/arrow_back"
+                app:subtitle="@string/name"
+                app:subtitleTextAppearance="@style/SubTextStyle"
+                app:title="@string/name"
+                app:titleMarginStart="@dimen/_20sdp"
+                app:titleTextAppearance="@style/TextStyle" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/clickable_linear"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/baseline_edit_24"/>
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -73,7 +90,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/name"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
@@ -99,7 +115,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/age_n"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
@@ -125,7 +140,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/male"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
@@ -138,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
-                    app:cardBackgroundColor="#C5F1FC"
+                    app:cardBackgroundColor="#ae501e"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:strokeColor="@android:color/transparent"
                     app:strokeWidth="0dp">
@@ -156,7 +170,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/test_mi"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12sdp" />
 
@@ -170,7 +183,6 @@
                             android:clickable="false"
                             android:focusable="false"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/completed"
                             android:textAllCaps="false"
                             android:textSize="@dimen/_7sdp"
                             app:cornerRadius="@dimen/_4sdp" />
@@ -205,53 +217,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/linearLocation"
-                    android:layout_width="0dp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_linear"
-                    android:layout_weight="1">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:background="@drawable/linear_light"
-                        android:gravity="center"
-                        android:padding="@dimen/_4sdp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:src="@drawable/orange_loc" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLoc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:text="@string/desc"
-                            android:textSize="@dimen/_8sdp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/linearNumber"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:clickable="true"
                     android:focusable="true"
-                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_linear"
-                    android:layout_weight="1">
+                    android:background="@drawable/clickable_linear">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -273,7 +247,6 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/poppins_semibold"
                             android:maxLines="1"
-                            android:text="+998 91 486-79-09"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp" />
 
@@ -281,33 +254,35 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/linear_light"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_4sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:src="@drawable/orange_loc" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLoc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/tash"
-                    android:textSize="@dimen/_9sdp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvOrgan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/and"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
-
-            </LinearLayout>
-
+                android:layout_height="@dimen/_20sdp"/>
 
         </LinearLayout>
 

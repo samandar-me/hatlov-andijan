@@ -35,6 +35,7 @@ object Dependencies {
     const val Glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val GlideComp = "com.github.bumptech.glide:compiler:${Versions.glide}"
     const val Shimmer = "com.facebook.shimmer:shimmer:${Versions.shimmer}"
+    const val Paging =  "androidx.paging:paging-runtime:3.1.1"
 }
 
 object Versions {

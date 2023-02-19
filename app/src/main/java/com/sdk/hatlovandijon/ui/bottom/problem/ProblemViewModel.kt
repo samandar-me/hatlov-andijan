@@ -28,6 +28,7 @@ class ProblemViewModel @Inject constructor(
             is ProblemEvent.OnSaveAppeal -> {
                 viewModelScope.launch {
                     useCases.addAppealUseCase(event.appealRequest).collect { response ->
+                        Log.d(TAG, "onEvent: $response")
                         when (response) {
                             is Status.Loading -> _state.update { ProblemState.Loading }
                             is Status.Error -> _state.update { ProblemState.Error(response.message) }

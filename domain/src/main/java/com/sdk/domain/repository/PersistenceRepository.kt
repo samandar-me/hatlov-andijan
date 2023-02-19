@@ -2,6 +2,7 @@ package com.sdk.domain.repository
 
 import com.sdk.domain.model.LoginData
 import com.sdk.domain.model.UserEntity
+import com.sdk.domain.model.VariableStatus
 import kotlinx.coroutines.flow.Flow
 
 interface PersistenceRepository  {

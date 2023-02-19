@@ -12,5 +12,6 @@ data class AllUseCases(
     val getUserUseCase: GetUserUseCase,
     val getDetailImagesUseCase: GetDetailImagesUseCase,
     val addAppealUseCase: AddAppealUseCase,
-    val searchAppealTypeUseCase: SearchAppealTypeUseCase
+    val searchAppealTypeUseCase: SearchAppealTypeUseCase,
+    val searchAppealDashboardUseCase: SearchAppealDashboardUseCase
 )

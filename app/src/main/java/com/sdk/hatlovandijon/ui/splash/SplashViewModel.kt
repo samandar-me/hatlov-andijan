@@ -8,7 +8,6 @@ import com.sdk.domain.model.LoginData
 import com.sdk.domain.use_case.base.AllUseCases
 import com.sdk.domain.util.Status
 import com.sdk.hatlovandijon.util.Constants.TAG
-import com.sdk.hatlovandijon.util.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +21,6 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val useCases: AllUseCases,
     private val dataStoreManager: DataStoreManager,
-    private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<SplashState> = MutableStateFlow(SplashState.Idle)
@@ -32,30 +30,26 @@ class SplashViewModel @Inject constructor(
         checkForUser()
     }
 
-    private fun checkForUser() {
+    fun checkForUser() {
         viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()) {
-                useCases.getVariableUseCase.invoke(Unit).collect { status ->
-                    when (status) {
-                        is Status.Loading -> {
-                            delay(1000L)
-                        }
-                        is Status.Error -> {
-                            if (status.message == "401") {
-                                if (dataStoreManager.getUserId().first() == null) {
-                                    _state.update { SplashState.UserNotAuthed }
-                                } else {
-                                    login()
-                                }
+            useCases.getVariableUseCase.invoke(Unit).collect { status ->
+                when (status) {
+                    is Status.Loading -> {
+                        delay(1000L)
+                    }
+                    is Status.Error -> {
+                        if (status.message == "401") {
+                            if (dataStoreManager.getUserId().first() == null) {
+                                _state.update { SplashState.UserNotAuthed }
+                            } else {
+                                login()
                             }
                         }
-                        is Status.Success -> {
-                            _state.update { SplashState.UserAuthed }
-                        }
+                    }
+                    is Status.Success -> {
+                        _state.update { SplashState.UserAuthed }
                     }
                 }
-            } else {
-                _state.update { SplashState.NoInternet }
             }
         }
     }
