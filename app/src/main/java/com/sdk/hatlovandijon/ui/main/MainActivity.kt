@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.editAppealFragment -> {
                     changeBottomNavVisible(false)
                 }
+                R.id.addEditAppealFragment -> {
+                    changeBottomNavVisible(false)
+                }
                 else -> {
                     changeBottomNavVisible(true)
                 }

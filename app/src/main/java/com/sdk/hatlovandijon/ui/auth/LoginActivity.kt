@@ -113,6 +113,7 @@ class LoginActivity : BaseActivity() {
                         snack(getString(R.string.success), true)
                         delay(1000L)
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
                     }
                 }
             }

@@ -4,11 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,6 +30,7 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
     private var id: Int? = null
     private val detailImageAdapter by lazy { DetailImageAdapter() }
     private val viewModel: DetailViewModel by viewModels()
+    private lateinit var data: Data
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         id = arguments?.getInt("id")
@@ -48,7 +46,10 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
             findNavController().popBackStack()
         }
         binding.btnEdit.click {
-            findNavController().navigate(R.id.action_detailFragment_to_editAppealFragment)
+            if (::data.isInitialized) {
+                val bundle = bundleOf("data" to data)
+                findNavController().navigate(R.id.action_detailFragment_to_editAppealFragment, bundle)
+            }
         }
         observeState()
     }
@@ -87,9 +88,9 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
     }
 
     private fun showUI(data: Data) {
+        this.data = data
         binding.apply {
             toolbar.title = data.owner_home_name.splitText()
-            toolbar.subtitle = data.mahalla.splitText()
             tvFullName.text = data.owner_home_name.splitText()
             tvAge.text = data.owner_home_year.toString().splitText()
             tvGen.text = data.owner_home_jinsi.splitText()
@@ -97,6 +98,8 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
             tvLoc.text = data.address.splitText()
             tvPhone.text = data.owner_home_phone.splitText()
             cardView.setCardBackgroundColor(Color.parseColor(data.turi.color))
+            tvBtn.text = data.status.name
+            tvDeadLine.text = data.deadline
 
             binding.linearNumber.click {
                 val intent = Intent(Intent.ACTION_VIEW)

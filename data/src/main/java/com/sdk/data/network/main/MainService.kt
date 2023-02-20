@@ -8,9 +8,13 @@ import com.sdk.domain.model.search.SearchResponse
 import com.sdk.domain.model.upload.AddAppealResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
+import retrofit2.http.DELETE
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -56,4 +60,41 @@ interface MainService {
     suspend fun searchAppeal(
         @QueryMap map: Map<String, Any>
     ): Response<FilterResponse>
+
+    @FormUrlEncoded
+    @PUT("api/v1/murojaat/update/{id}/")
+    suspend fun updateAppeal(
+        @Path("id") id: Int,
+        @Field("address") address: String,
+        @Field("owner_home_name") ownerHomeName: String,
+        @Field("owner_home_year") ownerHomeYear: Int,
+        @Field("owner_home_jinsi") ownerHomeGender: Int,
+        @Field("owner_home_phone") ownerHomePhone: String,
+        @Field("owner_as_speaker") ownerAsSpeaker: Int,
+        @Field("speaker_name") speakerName: String,
+        @Field("speaker_year") speakerYear: String,
+        @Field("speaker_jinsi") speakerGender: String,
+        @Field("speaker_phone") speakerPhone: String,
+        @Field("turi") type: Int,
+        @Field("izoh") comment: String
+    ): Response<AddAppealResponse>
+
+    @DELETE("api/v1/murojaat/image/{id}/")
+    suspend fun deleteImage(
+        @Path("id") id: Int,
+    ): Response<AddAppealResponse>
+
+    @PUT("api/v1/murojaat/image/{id}/")
+    @Multipart
+    suspend fun updateImage(
+        @Path("id") id: Int,
+        @Part image: MultipartBody.Part
+    ): Response<AddAppealResponse>
+
+    @POST("api/v1/murojaat/image/{id}/")
+    @Multipart
+    suspend fun addImagesToAppeal(
+        @Path("id") id: Int,
+        @Part images: List<MultipartBody.Part>
+    ): Response<AddAppealResponse>
 }

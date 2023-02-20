@@ -44,6 +44,17 @@ class ProblemViewModel @Inject constructor(
                     }
                 }
             }
+            is ProblemEvent.OnUpdateAppeal -> {
+                viewModelScope.launch {
+                    useCases.updateAppealUseCase(event.updateAppealRequest).collect { response ->
+                        when (response) {
+                            is Status.Loading -> _state.update { ProblemState.Loading }
+                            is Status.Error -> _state.update { ProblemState.Error(response.message) }
+                            is Status.Success -> _state.update { ProblemState.SuccessUpdate }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -62,4 +62,6 @@
     <string name="error_occ">Xatolik yuz berdi</string>
     <string name="enter_query">So\'rov kiriting!</string>
     <string name="viewing">Ko\'rib chiqilmoqda</string>
+    <string name="update_appeal">Yangilash</string>
+    <string name="updated">Yangilandi</string>
 </resources>

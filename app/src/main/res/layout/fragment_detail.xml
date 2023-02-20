@@ -19,16 +19,14 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_weight="1"
                 android:paddingStart="@dimen/_4sdp"
                 app:navigationIcon="@drawable/arrow_back"
-                app:subtitle="@string/name"
                 app:subtitleTextAppearance="@style/SubTextStyle"
-                app:title="@string/name"
                 app:titleMarginStart="@dimen/_20sdp"
                 app:titleTextAppearance="@style/TextStyle" />
 
@@ -186,6 +184,15 @@
                             android:textAllCaps="false"
                             android:textSize="@dimen/_7sdp"
                             app:cornerRadius="@dimen/_4sdp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:id="@+id/tvDeadLine"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_9sdp"/>
 
                     </LinearLayout>
 

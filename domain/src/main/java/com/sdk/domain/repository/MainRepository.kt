@@ -5,9 +5,11 @@ import com.sdk.domain.model.appeal.AppealResponse
 import com.sdk.domain.model.appeal.Murojaatlar
 import com.sdk.domain.model.detail.DetailResponse
 import com.sdk.domain.model.search.SearchData
+import com.sdk.domain.model.update.UpdateAppealRequest
 import com.sdk.domain.model.upload.AddAppealRequest
 import com.sdk.domain.util.Status
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 interface MainRepository {
     suspend fun getVariables(): Flow<Status<List<VariableStatus>>>
@@ -17,4 +19,6 @@ interface MainRepository {
 
     suspend fun searchAppealType(query: String): Flow<List<SearchData>>
     suspend fun searchAppealDashboard(query: String): Flow<Status<List<Murojaatlar>>>
+
+    suspend fun updateAppeal(appealRequest: UpdateAppealRequest): Flow<Status<Boolean>>
 }

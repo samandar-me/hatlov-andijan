@@ -4,16 +4,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
+import com.sdk.domain.model.detail.Data
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import com.sdk.domain.model.appeal.Murojaatlar
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentAddBinding
 import com.sdk.hatlovandijon.ui.base.BaseFragment
 import com.sdk.hatlovandijon.ui.bottom.add.AddData
+import com.sdk.hatlovandijon.util.splitText
 import com.sdk.hatlovandijon.util.viewBinding
 
 class EditAppealFragment : BaseFragment(R.layout.fragment_add) {
     private val binding by viewBinding { FragmentAddBinding.bind(it) }
+    private var data: Data? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        data = arguments?.getParcelable("data") as? Data
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         editTexts()
@@ -42,6 +51,7 @@ class EditAppealFragment : BaseFragment(R.layout.fragment_add) {
             val speakerNumber = binding.etIntNumber.text.toString().trim()
             try {
                 val addData = AddData(
+                    id = data?.id ?: -1,
                     address = "$streetName, $homeAddress",
                     ownerHomeName = "$ownerHomeName $ownerHomeLastName",
                     ownerHomeYear = ownerYear.toInt(),
@@ -51,15 +61,19 @@ class EditAppealFragment : BaseFragment(R.layout.fragment_add) {
                     speakerName = "$speakerName $speakerLastName",
                     speakerYear = speakerAge,
                     speakerGender = speakerGen,
-                    speakerPhone = speakerNumber
+                    speakerPhone = speakerNumber,
+                    problemContent = data?.turi?.name ?: "",
+                    comment = data?.izoh ?: "",
+                    oldImages = data?.images ?: emptyList()
                 )
                 val bundle = bundleOf("add_data" to addData)
-                //findNavController().navigate(R.id.action_editAppealFragment_to_problemFragment, bundle)
+                findNavController().navigate(R.id.action_editAppealFragment_to_addEditAppealFragment, bundle)
             } catch (e: Exception) {
                 snack(getString(R.string.enter_correct_data), false)
                 e.printStackTrace()
             }
         }
+        showUI()
         binding.apply {
             val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listOf(getString(R.string.male), getString(R.string.female)))
             etSpeakerGen.setAdapter(arrayAdapter)
@@ -82,6 +96,23 @@ class EditAppealFragment : BaseFragment(R.layout.fragment_add) {
             )
             editTextList.forEach {
                 it.key.sutUpInput(it.value)
+            }
+        }
+    }
+    private fun showUI() {
+        data?.let { d ->
+            binding.apply {
+                etStreetName.setText(d.mahalla.splitText())
+                etOwnerGen.setText(d.owner_home_jinsi.splitText())
+                etHomeAddress.setText(d.address.splitText())
+                etHomeBoss.setText(d.owner_home_name.subSequence(0, d.owner_home_name.indexOf(" ")).toString().splitText())
+                etHomeBossLastName.setText(d.owner_home_name.subSequence(d.owner_home_name.indexOf(" "), d.owner_home_name.length -1).toString().splitText())
+                etAge.setText(d.owner_home_year.toString().splitText())
+                etNumber.setText(d.owner_home_phone.splitText())
+                etName.setText((d.speaker_name ?: "").splitText())
+                etLastName.setText((d.speaker_name ?: "").splitText())
+                etIntAge.setText((d.speaker_year ?: 0).toString().splitText())
+                etIntNumber.setText((d.speaker_phone ?: "").splitText())
             }
         }
     }

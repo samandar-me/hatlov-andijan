@@ -1,5 +1,10 @@
 package com.sdk.domain.model.detail
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
 data class Data(
     val added_date: String,
     val address: String,
@@ -14,10 +19,10 @@ data class Data(
     val owner_home_phone: String,
     val owner_home_year: Int,
     val speaker_jinsi: String,
-    val speaker_name: Any,
-    val speaker_phone: Any,
-    val speaker_year: Any,
+    val speaker_name: String?,
+    val speaker_phone: String?,
+    val speaker_year: Int?,
     val status: Status,
     val turi: Turi,
     val xodim: String
-)
+): Parcelable

@@ -1,7 +1,7 @@
-package com.sdk.hatlovandijon.ui.bottom.problem
+package com.sdk.hatlovandijon.ui.bottom.edit
 
 import android.Manifest
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -24,29 +24,34 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.sangcomz.fishbun.FishBun
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
-import com.sdk.domain.model.upload.AddAppealRequest
+import com.sdk.domain.model.update.ImageForUpdate
+import com.sdk.domain.model.update.UpdateAppealRequest
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentProblemBinding
 import com.sdk.hatlovandijon.ui.base.BaseFragment
 import com.sdk.hatlovandijon.ui.bottom.add.AddData
+import com.sdk.hatlovandijon.ui.bottom.problem.ImageAdapter
+import com.sdk.hatlovandijon.ui.bottom.problem.ProblemEvent
+import com.sdk.hatlovandijon.ui.bottom.problem.ProblemState
+import com.sdk.hatlovandijon.ui.bottom.problem.ProblemViewModel
 import com.sdk.hatlovandijon.util.Constants.TAG
+import com.sdk.hatlovandijon.util.splitText
 import com.sdk.hatlovandijon.util.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
-import java.util.*
 
-
-class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
+class AddEditAppealFragment: BaseFragment(
+    R.layout.fragment_problem
+) {
     private val binding by viewBinding { FragmentProblemBinding.bind(it) }
     private val imageAdapter by lazy { ImageAdapter() }
     private var addData: AddData? = null
     private val viewModel: ProblemViewModel by viewModels()
     private var job: Job? = null
 
-    private var typeInt: Int = 0
+    private var typeInt: Int = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addData = arguments?.getParcelable("add_data")
@@ -56,6 +61,14 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
+        }
+        binding.apply {
+            btnSave.text = getString(R.string.update_appeal)
+            addData?.let {
+                Log.d(TAG, "onViewCreated: $it")
+                etDesc.setText(it.comment.splitText())
+                etAutoComplete.setText(it.problemContent.splitText())
+            }
         }
         binding.rv.apply {
             adapter = imageAdapter
@@ -92,7 +105,8 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
         val comment = binding.etDesc.text.toString().trim()
         val type = binding.etAutoComplete.text.toString()
         addData?.let { data ->
-            val appealRequest = AddAppealRequest(
+            val appealRequest = UpdateAppealRequest(
+                addData?.id ?: 0,
                 data.address,
                 data.ownerHomeName,
                 data.ownerHomeYear,
@@ -105,12 +119,13 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                 data.speakerPhone,
                 typeInt,
                 comment,
+                data.oldImages,
                 imageAdapter.uriList.map {
                     File(imageFile(it))
                 }
             )
-            if (type.isNotBlank() && comment.isNotBlank() && imageAdapter.uriList.isNotEmpty()) {
-                viewModel.onEvent(ProblemEvent.OnSaveAppeal(appealRequest))
+            if (type.isNotBlank() && comment.isNotBlank()) {
+                viewModel.onEvent(ProblemEvent.OnUpdateAppeal(appealRequest))
             } else {
                 snack(getString(R.string.enter_correct_data), false)
             }
@@ -131,12 +146,12 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                         binding.pr.isVisible = false
                         binding.btnSave.isVisible = true
                     }
-                    is ProblemState.SuccessUpdate -> Unit
-                    is ProblemState.Success -> {
+                    is ProblemState.Success -> Unit
+                    is ProblemState.SuccessUpdate -> {
                         binding.pr.isVisible = false
                         binding.btnSave.isVisible = true
-                        snack(getString(R.string.uploaded), true)
-                        findNavController().navigate(R.id.action_problemFragment_to_mainFragment)
+                        snack(getString(R.string.updated), true)
+                        findNavController().navigate(R.id.action_addEditAppealFragment_to_mainFragment)
                     }
                 }
             }
@@ -153,7 +168,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
     private fun setupImagePicker() {
         FishBun.with(this)
             .setImageAdapter(GlideAdapter())
-            .setMaxCount(4)
+            .setMaxCount(3)
             .setMinCount(1)
             .setActionBarColor(ContextCompat.getColor(requireContext(), R.color.blue))
             .setAllViewTitle(getString(R.string.all_images))
@@ -166,7 +181,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             try {
-                if (it.resultCode == RESULT_OK) {
+                if (it.resultCode == Activity.RESULT_OK) {
                     val images =
                         it.data?.getParcelableArrayListExtra<Uri>(FishBun.INTENT_PATH)
                             ?: arrayListOf()
@@ -211,7 +226,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == 55) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 55) {
             var mediaCount = 0
             val list = mutableListOf<Uri>()
             while (mediaCount < data?.clipData!!.itemCount) {

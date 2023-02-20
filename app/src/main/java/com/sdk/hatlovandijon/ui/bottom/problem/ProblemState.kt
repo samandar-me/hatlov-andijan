@@ -5,4 +5,6 @@ sealed class ProblemState {
     object Idle: ProblemState()
     data class Error(val message: String): ProblemState()
     object Success: ProblemState()
+
+    object SuccessUpdate: ProblemState()
 }

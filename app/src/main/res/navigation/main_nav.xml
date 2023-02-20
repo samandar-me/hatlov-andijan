@@ -38,7 +38,11 @@
         tools:layout="@layout/fragment_chart" >
         <action
             android:id="@+id/action_chartFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/problemFragment"
@@ -68,5 +72,30 @@
     <fragment
         android:id="@+id/editAppealFragment"
         android:name="com.sdk.hatlovandijon.ui.bottom.edit.EditAppealFragment"
-        android:label="EditAppealFragment"/>
+        android:label="EditAppealFragment">
+        <action
+            android:id="@+id/action_editAppealFragment_to_problemFragment"
+            app:destination="@id/problemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_editAppealFragment_to_addEditAppealFragment"
+            app:destination="@id/addEditAppealFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditAppealFragment"
+        android:name="com.sdk.hatlovandijon.ui.bottom.edit.AddEditAppealFragment"
+        android:label="AddEditAppealFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right">
+        <action
+            android:id="@+id/action_addEditAppealFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

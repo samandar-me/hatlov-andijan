@@ -77,7 +77,8 @@ object AppModule {
             getDetailImagesUseCase = GetDetailImagesUseCase(mainRepository),
             addAppealUseCase = AddAppealUseCase(mainRepository),
             searchAppealTypeUseCase = SearchAppealTypeUseCase(mainRepository),
-            searchAppealDashboardUseCase = SearchAppealDashboardUseCase(mainRepository)
+            searchAppealDashboardUseCase = SearchAppealDashboardUseCase(mainRepository),
+            updateAppealUseCase = UpdateAppealUseCase(mainRepository)
         )
     }
 

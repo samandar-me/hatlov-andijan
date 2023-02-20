@@ -7,6 +7,7 @@ import com.sdk.domain.model.appeal.AppealResponse
 import com.sdk.domain.model.appeal.Murojaatlar
 import com.sdk.domain.model.detail.DetailResponse
 import com.sdk.domain.model.search.SearchData
+import com.sdk.domain.model.update.UpdateAppealRequest
 import com.sdk.domain.model.upload.AddAppealRequest
 import com.sdk.domain.repository.MainRepository
 import com.sdk.domain.util.Status
@@ -17,8 +18,9 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
-    private val mainService: MainService
+    private val mainService: MainService,
 ) : MainRepository {
+    private val TAG = "@@@"
     override suspend fun getVariables(): Flow<Status<List<VariableStatus>>> = flow {
         emit(Status.Loading)
         try {
@@ -114,16 +116,64 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchAppealDashboard(query: String): Flow<Status<List<Murojaatlar>>> = flow {
-        emit(Status.Loading)
-        try  {
-            val mapQuery = mapOf("search" to query)
-             val response = mainService.searchAppeal(mapQuery)
-            response.body()?.let {
-                emit(Status.Success(it.data.result))
+    override suspend fun searchAppealDashboard(query: String): Flow<Status<List<Murojaatlar>>> =
+        flow {
+            emit(Status.Loading)
+            try {
+                val mapQuery = mapOf("search" to query)
+                val response = mainService.searchAppeal(mapQuery)
+                response.body()?.let {
+                    emit(Status.Success(it.data.result))
+                }
+            } catch (e: Exception) {
+                emit(Status.Error(e.toString()))
             }
-        }catch (e: Exception) {
-            emit(Status.Error(e.toString()))
         }
-    }
+
+    override suspend fun updateAppeal(appealRequest: UpdateAppealRequest): Flow<Status<Boolean>> =
+        flow {
+            emit(Status.Loading)
+            try {
+                val response = mainService.updateAppeal(
+                    appealRequest.id,
+                    appealRequest.address,
+                    appealRequest.ownerHomeName,
+                    appealRequest.ownerHomeYear,
+                    appealRequest.ownerHomeGender,
+                    appealRequest.ownerHomePhone,
+                    appealRequest.ownerAsSpeaker,
+                    appealRequest.speakerName,
+                    appealRequest.speakerYear,
+                    appealRequest.speakerGender,
+                    appealRequest.speakerPhone,
+                    appealRequest.type,
+                    appealRequest.comment
+                )
+                response.body().let {
+                    if (it?.success == true) {
+                        appealRequest.oldImages.forEach { image ->
+                           mainService.deleteImage(image.id)
+                        }
+                        val addResponse = mainService.addImagesToAppeal(
+                            appealRequest.id,
+                            appealRequest.newImages.map {file ->
+                                MultipartBody.Part.createFormData(
+                                    "images",
+                                    file.name,
+                                    file.asRequestBody()
+                                )
+                            }
+                        )
+                        Log.d(TAG, "updateAppealF: ${addResponse.code()}")
+                        Log.d(TAG, "updateAppealF: ${addResponse.body()}")
+                        Log.d(TAG, "updateAppealF: ${addResponse.message()}")
+                        if (addResponse.body()?.success == true) {
+                            emit(Status.Success(true))
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                emit(Status.Error(e.toString()))
+            }
+        }
 }
