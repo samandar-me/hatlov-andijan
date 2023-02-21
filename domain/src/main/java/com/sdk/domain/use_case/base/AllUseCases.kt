@@ -14,5 +14,6 @@ data class AllUseCases(
     val addAppealUseCase: AddAppealUseCase,
     val searchAppealTypeUseCase: SearchAppealTypeUseCase,
     val searchAppealDashboardUseCase: SearchAppealDashboardUseCase,
-    val updateAppealUseCase: UpdateAppealUseCase
+    val updateAppealUseCase: UpdateAppealUseCase,
+    val deleteImageUseCase: DeleteImageUseCase
 )

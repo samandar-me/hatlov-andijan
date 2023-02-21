@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sdk.domain.model.appeal.Murojaatlar
 import com.sdk.domain.model.detail.Data
 import com.sdk.hatlovandijon.R
@@ -50,6 +52,9 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
                 val bundle = bundleOf("data" to data)
                 findNavController().navigate(R.id.action_detailFragment_to_editAppealFragment, bundle)
             }
+        }
+        detailImageAdapter.onClick = {
+            showDialog(it)
         }
         observeState()
     }
@@ -90,6 +95,7 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
     private fun showUI(data: Data) {
         this.data = data
         binding.apply {
+            viewPager.isVisible = data.images.isNotEmpty()
             toolbar.title = data.owner_home_name.splitText()
             tvFullName.text = data.owner_home_name.splitText()
             tvAge.text = data.owner_home_year.toString().splitText()
@@ -107,5 +113,18 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
                 startActivity(intent)
             }
         }
+    }
+    private fun showDialog(id: Int) {
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setTitle(getString(R.string.delete_image))
+            setMessage(getString(R.string.delete_image_content))
+            setPositiveButton("Ҳа") { di , _ ->
+                di.dismiss()
+                viewModel.onEvent(DetailEvent.OnDeleteImage(id))
+                viewModel.onEvent(DetailEvent.OnGetDetailData(data.id))
+                snack(getString(R.string.deleted), true)
+            }
+            setNegativeButton("Йўқ", null)
+        }.create().show()
     }
 }

@@ -18,6 +18,8 @@ import com.sdk.hatlovandijon.util.Constants
 
 class DetailImageAdapter :
     ListAdapter<Image, DetailImageAdapter.DetailImageViewHolder>(DiffCallBack()) {
+
+    lateinit var onClick: (Int) -> Unit
     private class DiffCallBack : DiffUtil.ItemCallback<Image>() {
         override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
             return oldItem.id == newItem.id
@@ -70,6 +72,9 @@ class DetailImageAdapter :
                         }
                     })
                     .into(this)
+            }
+            binding.deleteIcon.setOnClickListener {
+                onClick(image.id)
             }
         }
     }

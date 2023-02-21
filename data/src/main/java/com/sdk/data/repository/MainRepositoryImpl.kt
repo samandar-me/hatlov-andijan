@@ -164,9 +164,6 @@ class MainRepositoryImpl @Inject constructor(
                                 )
                             }
                         )
-                        Log.d(TAG, "updateAppealF: ${addResponse.code()}")
-                        Log.d(TAG, "updateAppealF: ${addResponse.body()}")
-                        Log.d(TAG, "updateAppealF: ${addResponse.message()}")
                         if (addResponse.body()?.success == true) {
                             emit(Status.Success(true))
                         }
@@ -176,4 +173,9 @@ class MainRepositoryImpl @Inject constructor(
                 emit(Status.Error(e.toString()))
             }
         }
+
+    override suspend fun deleteImage(id: Int) {
+        val res = mainService.deleteImage(id)
+        Log.d(TAG, "deleteImage: ${res.body()}")
+    }
 }

@@ -21,4 +21,6 @@ interface MainRepository {
     suspend fun searchAppealDashboard(query: String): Flow<Status<List<Murojaatlar>>>
 
     suspend fun updateAppeal(appealRequest: UpdateAppealRequest): Flow<Status<Boolean>>
+
+    suspend fun deleteImage(id: Int)
 }

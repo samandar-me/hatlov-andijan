@@ -16,7 +16,7 @@
     <application
         android:name=".HatlovApp"
         android:allowBackup="true"
-        android:icon="@drawable/app_logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
