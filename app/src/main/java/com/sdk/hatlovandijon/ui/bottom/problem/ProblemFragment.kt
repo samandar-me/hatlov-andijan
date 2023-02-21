@@ -127,9 +127,9 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                         binding.btnSave.isVisible = false
                     }
                     is ProblemState.Error -> {
-                        Log.d(TAG, "observeState: ${it.message}")
                         binding.pr.isVisible = false
                         binding.btnSave.isVisible = true
+                        snack(getString(R.string.error_occ), false)
                     }
                     is ProblemState.SuccessUpdate -> Unit
                     is ProblemState.Success -> {

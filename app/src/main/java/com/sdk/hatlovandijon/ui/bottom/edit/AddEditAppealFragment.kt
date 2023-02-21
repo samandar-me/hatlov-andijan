@@ -145,6 +145,7 @@ class AddEditAppealFragment: BaseFragment(
                         Log.d(TAG, "observeState: ${it.message}")
                         binding.pr.isVisible = false
                         binding.btnSave.isVisible = true
+                        snack(getString(R.string.error_occ), false)
                     }
                     is ProblemState.Success -> Unit
                     is ProblemState.SuccessUpdate -> {

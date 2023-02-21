@@ -67,7 +67,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                     is MainState.Error -> {
                         binding.shimmer.stopShimmer()
                         binding.rv.isVisible = false
-                        snack(state.message, false)
+                        snack(getString(R.string.error_occ), false)
                     }
                     is MainState.SuccessAppeals -> {
                         binding.shimmer.stopShimmer()

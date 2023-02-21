@@ -2,6 +2,7 @@ package com.sdk.hatlovandijon.ui.no_internet
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.addCallback
 import com.google.android.material.button.MaterialButton
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.ui.base.BaseActivity
@@ -20,11 +21,17 @@ class NoInternetActivity : BaseActivity() {
         snack(getString(R.string.no_internet), false)
 
         findViewById<MaterialButton>(R.id.btnCheck).setOnClickListener {
-            if (networkHelper.isNetworkConnected()) {
-                finish()
-            } else {
-                snack(getString(R.string.no_internet), false)
-            }
+            checkConnect()
+        }
+        onBackPressedDispatcher.addCallback {
+            checkConnect()
+        }
+    }
+    private fun checkConnect() {
+        if (networkHelper.isNetworkConnected()) {
+            finish()
+        } else {
+            snack(getString(R.string.no_internet), false)
         }
     }
 }

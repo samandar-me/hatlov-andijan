@@ -80,7 +80,7 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
                 when (it) {
                     is DetailState.Loading -> Unit
                     is DetailState.Error -> {
-                        snack(it.message, false)
+                        snack(getString(R.string.error_occ), false)
                     }
                     is DetailState.Success -> {
                         binding.pr.isVisible = false
@@ -95,6 +95,7 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
     private fun showUI(data: Data) {
         this.data = data
         binding.apply {
+            btnEdit.isVisible = data.status.id == 0
             viewPager.isVisible = data.images.isNotEmpty()
             toolbar.title = data.owner_home_name.splitText()
             tvFullName.text = data.owner_home_name.splitText()

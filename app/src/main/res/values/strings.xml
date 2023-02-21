@@ -66,4 +66,6 @@
     <string name="delete_image">Расмни ўчириш</string>
     <string name="delete_image_content">Расмни ўчиришни истайсизми?</string>
     <string name="deleted">Ўчирилди</string>
+    <string name="update_downloaded">Янгиланиш ўрнатилди</string>
+    <string name="install">Ўрнатиш</string>
 </resources>
