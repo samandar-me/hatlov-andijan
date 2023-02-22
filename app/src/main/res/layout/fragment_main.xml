@@ -39,7 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_2sdp"
-        android:text="O'zbekiston ko'chasi!"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/editSearch"
         app:layout_constraintStart_toStartOf="parent"
@@ -251,6 +250,19 @@
         </androidx.core.widget.NestedScrollView>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/empty" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"

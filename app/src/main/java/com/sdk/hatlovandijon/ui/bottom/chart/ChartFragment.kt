@@ -23,6 +23,7 @@ import com.sdk.hatlovandijon.util.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -91,7 +92,10 @@ class ChartFragment : BaseFragment(
     private fun setUpAutoComplete() {
         lifecycleScope.launchWhenResumed {
             viewModel.variableList.collect { list ->
-                val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list.map { it.name })
+                val arrayAdapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_list_item_1,
+                    list.map { it.name })
                 binding.autoCompleteTv.setAdapter(arrayAdapter)
                 binding.autoCompleteTv.setOnItemClickListener { _, _, position, _ ->
                     type = list[position].id
@@ -101,7 +105,6 @@ class ChartFragment : BaseFragment(
     }
 
     private fun filterAppeals() {
-        Log.d(TAG, "filterAppeals: ${queryMap()}")
         lifecycleScope.launch {
             viewModel.filterAppeals(queryMap())
                 .onStart {
@@ -113,12 +116,12 @@ class ChartFragment : BaseFragment(
                 .catch {
                     snack(getString(R.string.error_occ), false)
                 }
-                .collectLatest {
+                .collect {
                     binding.shimmer.stopShimmer()
                     binding.shimmer.isVisible = false
                     binding.rv.isVisible = true
-                filterAdapter.submitData(it)
-            }
+                    filterAdapter.submitData(it)
+                }
         }
     }
 
@@ -141,6 +144,7 @@ class ChartFragment : BaseFragment(
         }
         datePicker.show(childFragmentManager, "Date_Range")
     }
+
     private fun queryMap(): HashMap<String, Any> {
         val hashMap = HashMap<String, Any>()
         val fromDate = binding.etFromDate.text.toString().trim()

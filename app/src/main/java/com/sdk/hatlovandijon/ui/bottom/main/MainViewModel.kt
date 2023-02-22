@@ -33,6 +33,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             Log.d(TAG, "mainViewModel: ${dataStoreManager.getToken().first()}")
             useCases.getUserUseCase(dataStoreManager.getUserId().first()!!).collect {
+                Log.d(TAG, "observeUser: $it")
                 _user.value = it
             }
         }

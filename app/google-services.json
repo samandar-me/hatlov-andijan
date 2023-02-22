@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "757931484964",
+    "project_id": "hatlovandijon",
+    "storage_bucket": "hatlovandijon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757931484964:android:488ace340af0af150175b1",
+        "android_client_info": {
+          "package_name": "com.sdk.hatlovandijon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757931484964-h1qqb9tcbcj7ockf8q52nu4ue97tgg5t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTj63so4Sts_PsQf315QqHBteLkZAIhOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757931484964-h1qqb9tcbcj7ockf8q52nu4ue97tgg5t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

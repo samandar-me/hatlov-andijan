@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -107,7 +108,7 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
             cardView.setCardBackgroundColor(Color.parseColor(data.turi.color))
             tvBtn.text = data.status.name
             tvDeadLine.text = data.deadline
-
+            tvBtn.setBackgroundColor(Color.parseColor(data.status.color))
             binding.linearNumber.click {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse("tel:$${data.owner_home_phone.splitText()}")

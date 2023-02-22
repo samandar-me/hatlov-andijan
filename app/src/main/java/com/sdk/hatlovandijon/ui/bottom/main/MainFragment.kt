@@ -1,6 +1,7 @@
 package com.sdk.hatlovandijon.ui.bottom.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentMainBinding
 import com.sdk.hatlovandijon.ui.adapter.AppealAdapter
 import com.sdk.hatlovandijon.ui.base.BaseFragment
+import com.sdk.hatlovandijon.util.Constants.TAG
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -43,6 +45,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         binding.editSearch.addTextChangedListener {
             it?.let { str ->
                 if (str.toString().isEmpty()) {
+                    binding.lottie.isVisible = false
                     appealAdapter.submitList(viewModel.savedAppealList)
                 }
             }
@@ -54,15 +57,17 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             true
         }
     }
+
     private fun observeState() {
         lifecycleScope.launch {
             viewModel.state.collect { state ->
-                when(state) {
+                when (state) {
                     is MainState.Loading -> {
                         binding.shimmer.isVisible = true
                         binding.shimmer.startShimmer()
                         binding.rv.isVisible = false
                         delay(2000L)
+                        binding.lottie.isVisible = false
                     }
                     is MainState.Error -> {
                         binding.shimmer.stopShimmer()
@@ -81,12 +86,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                         binding.shimmer.stopShimmer()
                         binding.rv.isVisible = true
                         binding.shimmer.isVisible = false
+                        binding.lottie.isVisible = state.appeals.isEmpty()
                         appealAdapter.submitList(state.appeals)
                     }
                 }
             }
         }
     }
+
     private fun observeUser() {
         lifecycleScope.launch {
             viewModel.user.collect {
@@ -99,6 +106,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             }
         }
     }
+
     private fun searchAppeal() {
         val query = binding.editSearch.text.toString().trim()
         if (query.isNotBlank()) {

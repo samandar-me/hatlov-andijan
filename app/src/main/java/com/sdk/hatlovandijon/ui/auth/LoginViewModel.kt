@@ -40,7 +40,6 @@ class LoginViewModel @Inject constructor(
                             }
                             is Status.Success -> {
                                 val user = Triple(event.loginData,status.data.access, status.data.userId)
-                                Log.d(TAG, "onEvent: $user")
                                 allUseCases.saveTokenUseCase(user)
                                 allUseCases.saveUserUseCase(
                                     UserEntity(
