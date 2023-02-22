@@ -17,9 +17,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/app_logo" />
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/logo_1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

@@ -19,10 +19,12 @@ class LoginRepositoryImpl @Inject constructor(
         emit(Status.Loading)
         try {
              val response = loginService.login(userName, password)
-            if (response.body()?.success!!) {
+            if (response.body()?.success == true) {
                 response.body()?.let {
                     emit(Status.Success(it.toLogin()))
                 }
+            } else {
+                emit(Status.Error(response.message()))
             }
         } catch (e: Exception) {
             e.printStackTrace()

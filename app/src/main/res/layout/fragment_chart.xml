@@ -52,6 +52,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:animateLayoutChanges="true"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -94,6 +95,29 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:animateLayoutChanges="true"
+                        android:layout_height="match_parent">
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="wrap_content"
+                            android:visibility="gone"
+                            android:id="@+id/btnClear"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:src="@drawable/baseline_clear_24"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -168,8 +192,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
                             android:inputType="none"
+                            android:text="@string/type"
                             android:paddingStart="@dimen/_34sdp"
-                            android:text="@string/viewing"
                             android:textAlignment="center" />
 
                     </com.google.android.material.textfield.TextInputLayout>

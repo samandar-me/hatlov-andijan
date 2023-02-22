@@ -73,6 +73,8 @@
                 android:id="@+id/etLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/blue" />
 
@@ -104,6 +106,8 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/blue" />
 

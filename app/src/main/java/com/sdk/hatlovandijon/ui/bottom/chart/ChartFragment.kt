@@ -60,6 +60,11 @@ class ChartFragment : BaseFragment(
             val bundle = bundleOf("id" to it)
             findNavController().navigate(R.id.action_chartFragment_to_detailFragment, bundle)
         }
+        binding.btnClear.click {
+            binding.btnClear.isVisible = false
+            binding.etFromDate.setText("")
+            binding.etToDate.setText("")
+        }
     }
 
     private fun setUpEditTexts() {
@@ -96,6 +101,7 @@ class ChartFragment : BaseFragment(
     }
 
     private fun filterAppeals() {
+        Log.d(TAG, "filterAppeals: ${queryMap()}")
         lifecycleScope.launch {
             viewModel.filterAppeals(queryMap())
                 .onStart {
@@ -124,6 +130,7 @@ class ChartFragment : BaseFragment(
             .build()
 
         datePicker.addOnPositiveButtonClickListener {
+            binding.btnClear.isVisible = true
             val timeZoneUTC: TimeZone = TimeZone.getDefault()
             val offsetFromUTC: Int = timeZoneUTC.getOffset(Date().time) * -1
             val simpleFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -135,10 +142,16 @@ class ChartFragment : BaseFragment(
         datePicker.show(childFragmentManager, "Date_Range")
     }
     private fun queryMap(): HashMap<String, Any> {
-        return hashMapOf(
-            "date_start" to binding.etFromDate.text.toString(),
-            "date_end" to binding.etToDate.text.toString(),
-            "turi" to type
-        )
+        val hashMap = HashMap<String, Any>()
+        val fromDate = binding.etFromDate.text.toString().trim()
+        val toDate = binding.etToDate.text.toString().trim()
+        if (fromDate.isNotBlank()) {
+            hashMap["date_start"] = fromDate
+        }
+        if (toDate.isNotBlank()) {
+            hashMap["date_end"] = toDate
+        }
+        hashMap["turi"] = type
+        return hashMap
     }
 }
