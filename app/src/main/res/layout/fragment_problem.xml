@@ -52,28 +52,16 @@
                     android:text="@string/problemContent"
                     android:textSize="@dimen/_9sdp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/etLayPrTitle"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <TextView
+                    android:id="@+id/tvSelect"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
+                    android:background="@drawable/linear_line"
+                    android:gravity="center|start"
                     android:layout_marginTop="@dimen/_2sdp"
-                    app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
-                    app:boxCornerRadiusBottomStart="@dimen/_8sdp"
-                    app:boxCornerRadiusTopEnd="@dimen/_8sdp"
-                    app:boxCornerRadiusTopStart="@dimen/_8sdp"
-                    app:boxStrokeColor="@color/blue">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/etAutoComplete"
-                        android:layout_width="match_parent"
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        android:inputType="none"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:textSize="@dimen/_11sdp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="@dimen/_50sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:textSize="@dimen/_11sdp" />
 
             </LinearLayout>
 
@@ -125,9 +113,9 @@
                     android:id="@+id/tvImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blue"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/upload_image"
+                    android:textColor="@color/blue"
                     android:textSize="@dimen/_9sdp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -175,8 +163,8 @@
                             android:id="@+id/rv"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:visibility="invisible"
                             android:layout_marginHorizontal="@dimen/_1sdp"
+                            android:visibility="invisible"
                             tools:layout_editor_absoluteX="114dp"
                             tools:layout_editor_absoluteY="0dp" />
 

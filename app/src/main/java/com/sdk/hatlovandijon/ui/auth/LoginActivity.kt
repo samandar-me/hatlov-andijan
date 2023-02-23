@@ -111,7 +111,7 @@ class LoginActivity : BaseActivity() {
                         binding.pr.isVisible = false
                         binding.btnLogin.isVisible = true
                         snack(getString(R.string.success), true)
-                        delay(1000L)
+                        delay(500L)
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     }

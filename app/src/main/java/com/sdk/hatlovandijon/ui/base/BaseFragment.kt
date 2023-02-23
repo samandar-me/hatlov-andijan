@@ -5,20 +5,26 @@ import android.graphics.Color
 import android.net.Uri
 import android.provider.Settings
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.FrameLayout
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.sdk.domain.model.search.SearchData
 import com.sdk.hatlovandijon.R
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -128,5 +134,24 @@ abstract class BaseFragment(
     }
     fun View.setBackColor(@ColorRes color: Int) {
         this.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
+    }
+    fun showSearchableFragment(searchDataList: List<SearchData>, onItemClicked: (SearchData) -> Unit) {
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.searchable_dialog,null)
+        val dialog = MaterialAlertDialogBuilder(requireContext()).setView(view).create()
+        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, searchDataList.map { it.name })
+        val listView: ListView = view.findViewById(R.id.listView)
+        val editSearch: AutoCompleteTextView = view.findViewById(R.id.etSearch)
+        var filteredList = searchDataList.toMutableList()
+        listView.adapter = arrayAdapter
+        editSearch.addTextChangedListener { edit ->
+            filteredList = searchDataList.filter { it.name.lowercase().contains(edit.toString().lowercase()) }.toMutableList()
+            val mAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, filteredList.map { it.name })
+            listView.adapter = mAdapter
+        }
+        listView.setOnItemClickListener { _, _, position, _ ->
+            onItemClicked(filteredList[position])
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }

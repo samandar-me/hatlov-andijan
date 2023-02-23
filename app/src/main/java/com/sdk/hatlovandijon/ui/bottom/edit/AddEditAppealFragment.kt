@@ -24,6 +24,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.sangcomz.fishbun.FishBun
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
+import com.sdk.domain.model.search.SearchData
 import com.sdk.domain.model.update.ImageForUpdate
 import com.sdk.domain.model.update.UpdateAppealRequest
 import com.sdk.hatlovandijon.R
@@ -41,13 +42,14 @@ import java.io.File
 
 class AddEditAppealFragment: BaseFragment(
     R.layout.fragment_problem
-), SearchableFragment.ClickListener {
+) {
     private val binding by viewBinding { FragmentProblemBinding.bind(it) }
     private val imageAdapter by lazy { ImageAdapter() }
-    private val searchableFragment by lazy { SearchableFragment() }
     private var addData: AddData? = null
     private val viewModel: ProblemViewModel by viewModels()
     private var job: Job? = null
+    private var typeInt: Int = 0
+    private val searchList = mutableListOf<SearchData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +66,7 @@ class AddEditAppealFragment: BaseFragment(
             addData?.let {
                 Log.d(TAG, "onViewCreated: $it")
                 etDesc.setText(it.comment.splitText())
-                etAutoComplete.setText(it.problemContent.splitText())
+                tvSelect.text = (it.problemContent.splitText())
             }
         }
         binding.rv.apply {
@@ -87,11 +89,16 @@ class AddEditAppealFragment: BaseFragment(
             uploadAppeal()
         }
         observeState()
+        lifecycleScope.launch {
+            viewModel.searchData.collect {
+                searchList.addAll(it)
+            }
+        }
     }
 
     private fun uploadAppeal() {
         val comment = binding.etDesc.text.toString().trim()
-        val type = binding.etAutoComplete.text.toString()
+        val type = binding.tvSelect.text.toString()
         addData?.let { data ->
             val appealRequest = UpdateAppealRequest(
                 addData?.id ?: 0,
@@ -105,7 +112,7 @@ class AddEditAppealFragment: BaseFragment(
                 data.speakerYear,
                 data.speakerGender,
                 data.speakerPhone,
-                searchableFragment.selectedData.id,
+                typeInt,
                 comment,
                 data.oldImages,
                 imageAdapter.uriList.map {
@@ -233,21 +240,15 @@ class AddEditAppealFragment: BaseFragment(
     private fun setupEditTexts() {
         binding.apply {
             etDesc.sutUpInput(binding.tvDesc)
-            etAutoComplete.setUpInput(binding.tvProblemTitle)
         }
     }
     private fun searchAutoComplete() {
-        binding.etAutoComplete.setOnFocusChangeListener { _, has ->
-            if (has) {
-                searchableFragment.setTargetFragment(this, 100)
-                searchableFragment.show(requireFragmentManager(), SearchableFragment.TAG)
-                binding.etAutoComplete.clearFocus()
+        binding.tvSelect.click {
+            showSearchableFragment(searchList) {
+                typeInt = it.id
+                binding.tvSelect.text = it.name
             }
         }
-    }
-
-    override fun selectedItem(title: String) {
-        binding.etAutoComplete.setText(title)
     }
 
     override fun onStop() {

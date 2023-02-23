@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -21,24 +22,27 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.sangcomz.fishbun.FishBun
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
+import com.sdk.domain.model.search.SearchData
 import com.sdk.domain.model.upload.AddAppealRequest
 import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentProblemBinding
 import com.sdk.hatlovandijon.ui.base.BaseFragment
 import com.sdk.hatlovandijon.ui.bottom.add.AddData
+import com.sdk.hatlovandijon.util.Constants.TAG
 import com.sdk.hatlovandijon.util.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.File
 
 
-class ProblemFragment : BaseFragment(R.layout.fragment_problem), SearchableFragment.ClickListener {
+class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
     private val binding by viewBinding { FragmentProblemBinding.bind(it) }
     private val imageAdapter by lazy { ImageAdapter() }
-    private val searchableFragment by lazy { SearchableFragment() }
     private var addData: AddData? = null
+    private val searchList = mutableListOf<SearchData>()
     private val viewModel: ProblemViewModel by viewModels()
     private var job: Job? = null
+    private var typeInt: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addData = arguments?.getParcelable("add_data")
@@ -70,11 +74,16 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem), SearchableFragm
             uploadAppeal()
         }
         observeState()
+        lifecycleScope.launch {
+            viewModel.searchData.collect {
+                searchList.addAll(it)
+            }
+        }
     }
 
     private fun uploadAppeal() {
         val comment = binding.etDesc.text.toString().trim()
-        val type = binding.etAutoComplete.text.toString()
+        val type = binding.tvSelect.text.toString()
         addData?.let { data ->
             val appealRequest = AddAppealRequest(
                 data.address,
@@ -87,7 +96,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem), SearchableFragm
                 data.speakerYear,
                 data.speakerGender,
                 data.speakerPhone,
-                searchableFragment.selectedData.id,
+                typeInt,
                 comment,
                 imageAdapter.uriList.map {
                     File(imageFile(it))
@@ -213,23 +222,16 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem), SearchableFragm
     private fun setupEditTexts() {
         binding.apply {
             etDesc.sutUpInput(binding.tvDesc)
-            etAutoComplete.setUpInput(binding.tvProblemTitle)
         }
     }
     private fun searchAutoComplete() {
-        binding.etAutoComplete.setOnFocusChangeListener { _, has ->
-            if (has) {
-                searchableFragment.setTargetFragment(this, 100)
-                searchableFragment.show(requireFragmentManager(), SearchableFragment.TAG)
-                binding.etAutoComplete.clearFocus()
+        binding.tvSelect.click {
+            showSearchableFragment(searchList) {
+                typeInt = it.id
+                binding.tvSelect.text = it.name
             }
         }
     }
-
-    override fun selectedItem(title: String) {
-        binding.etAutoComplete.setText(title)
-    }
-
     override fun onStop() {
         super.onStop()
         job?.cancel()
