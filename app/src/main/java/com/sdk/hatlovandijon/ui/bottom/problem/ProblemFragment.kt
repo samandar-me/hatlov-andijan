@@ -7,13 +7,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -29,24 +26,19 @@ import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentProblemBinding
 import com.sdk.hatlovandijon.ui.base.BaseFragment
 import com.sdk.hatlovandijon.ui.bottom.add.AddData
-import com.sdk.hatlovandijon.util.Constants.TAG
 import com.sdk.hatlovandijon.util.viewBinding
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
-import java.util.*
 
 
-class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
+class ProblemFragment : BaseFragment(R.layout.fragment_problem), SearchableFragment.ClickListener {
     private val binding by viewBinding { FragmentProblemBinding.bind(it) }
     private val imageAdapter by lazy { ImageAdapter() }
+    private val searchableFragment by lazy { SearchableFragment() }
     private var addData: AddData? = null
     private val viewModel: ProblemViewModel by viewModels()
     private var job: Job? = null
-
-    private var typeInt: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addData = arguments?.getParcelable("add_data")
@@ -54,6 +46,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -77,15 +70,6 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
             uploadAppeal()
         }
         observeState()
-        lifecycleScope.launch {
-            viewModel.searchData.collect { list ->
-                val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list.map { it.name })
-                binding.etAutoComplete.setAdapter(arrayAdapter)
-                binding.etAutoComplete.setOnItemClickListener { _, _, position, _ ->
-                    typeInt = list[position].id
-                }
-            }
-        }
     }
 
     private fun uploadAppeal() {
@@ -103,7 +87,7 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
                 data.speakerYear,
                 data.speakerGender,
                 data.speakerPhone,
-                typeInt,
+                searchableFragment.selectedData.id,
                 comment,
                 imageAdapter.uriList.map {
                     File(imageFile(it))
@@ -233,15 +217,17 @@ class ProblemFragment : BaseFragment(R.layout.fragment_problem) {
         }
     }
     private fun searchAutoComplete() {
-        binding.etAutoComplete.addTextChangedListener { editable ->
-            job?.cancel()
-            if (editable != null && editable.toString().isNotBlank()) {
-                job = lifecycleScope.launch {
-                    delay(200L)
-                    viewModel.onEvent(ProblemEvent.OnSearchAppealType(editable.toString().trim().lowercase()))
-                }
+        binding.etAutoComplete.setOnFocusChangeListener { _, has ->
+            if (has) {
+                searchableFragment.setTargetFragment(this, 100)
+                searchableFragment.show(requireFragmentManager(), SearchableFragment.TAG)
+                binding.etAutoComplete.clearFocus()
             }
         }
+    }
+
+    override fun selectedItem(title: String) {
+        binding.etAutoComplete.setText(title)
     }
 
     override fun onStop() {

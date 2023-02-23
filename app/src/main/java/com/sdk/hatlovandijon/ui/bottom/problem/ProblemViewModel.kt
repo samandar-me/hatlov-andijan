@@ -22,13 +22,16 @@ class ProblemViewModel @Inject constructor(
     val state: StateFlow<ProblemState> get() = _state
     private val _searchData: MutableStateFlow<List<SearchData>> = MutableStateFlow(emptyList())
     val searchData: StateFlow<List<SearchData>> get() = _searchData
+    
+    init {
+        onEvent(ProblemEvent.OnSearchAppealType)
+    }
 
     fun onEvent(event: ProblemEvent) {
         when(event ) {
             is ProblemEvent.OnSaveAppeal -> {
                 viewModelScope.launch {
                     useCases.addAppealUseCase(event.appealRequest).collect { response ->
-                        Log.d(TAG, "onEvent: $response")
                         when (response) {
                             is Status.Loading -> _state.update { ProblemState.Loading }
                             is Status.Error -> _state.update { ProblemState.Error(response.message) }
@@ -39,7 +42,7 @@ class ProblemViewModel @Inject constructor(
             }
             is ProblemEvent.OnSearchAppealType -> {
                 viewModelScope.launch {
-                    useCases.searchAppealTypeUseCase(event.query).collect {
+                    useCases.searchAppealTypeUseCase(Unit).collect {
                         _searchData.value = it
                     }
                 }

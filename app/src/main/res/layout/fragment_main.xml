@@ -56,6 +56,7 @@
         android:hint="@string/search"
         android:inputType="textPersonName"
         android:maxLines="1"
+        android:singleLine="true"
         android:padding="@dimen/_9sdp"
         android:paddingStart="@dimen/_20sdp"
         android:imeOptions="actionSearch"

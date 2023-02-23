@@ -17,7 +17,7 @@ interface MainRepository {
     suspend fun getDetailImages(id: Int): Flow<Status<DetailResponse>>
     suspend fun addAppealRequest(appealRequest: AddAppealRequest): Flow<Status<Boolean>>
 
-    suspend fun searchAppealType(query: String): Flow<List<SearchData>>
+    suspend fun searchAppealType(): Flow<List<SearchData>>
     suspend fun searchAppealDashboard(query: String): Flow<Status<List<Murojaatlar>>>
 
     suspend fun updateAppeal(appealRequest: UpdateAppealRequest): Flow<Status<Boolean>>

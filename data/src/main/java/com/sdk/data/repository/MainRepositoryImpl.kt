@@ -103,9 +103,9 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchAppealType(query: String): Flow<List<SearchData>> = flow {
+    override suspend fun searchAppealType(): Flow<List<SearchData>> = flow {
         try {
-            val response = mainService.searchAppealType(query)
+            val response = mainService.searchAppealType()
             response.body()?.let {
                 if (it.success) {
                     emit(it.data)

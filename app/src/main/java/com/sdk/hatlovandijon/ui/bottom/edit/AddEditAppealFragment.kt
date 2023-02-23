@@ -30,10 +30,7 @@ import com.sdk.hatlovandijon.R
 import com.sdk.hatlovandijon.databinding.FragmentProblemBinding
 import com.sdk.hatlovandijon.ui.base.BaseFragment
 import com.sdk.hatlovandijon.ui.bottom.add.AddData
-import com.sdk.hatlovandijon.ui.bottom.problem.ImageAdapter
-import com.sdk.hatlovandijon.ui.bottom.problem.ProblemEvent
-import com.sdk.hatlovandijon.ui.bottom.problem.ProblemState
-import com.sdk.hatlovandijon.ui.bottom.problem.ProblemViewModel
+import com.sdk.hatlovandijon.ui.bottom.problem.*
 import com.sdk.hatlovandijon.util.Constants.TAG
 import com.sdk.hatlovandijon.util.splitText
 import com.sdk.hatlovandijon.util.viewBinding
@@ -44,14 +41,14 @@ import java.io.File
 
 class AddEditAppealFragment: BaseFragment(
     R.layout.fragment_problem
-) {
+), SearchableFragment.ClickListener {
     private val binding by viewBinding { FragmentProblemBinding.bind(it) }
     private val imageAdapter by lazy { ImageAdapter() }
+    private val searchableFragment by lazy { SearchableFragment() }
     private var addData: AddData? = null
     private val viewModel: ProblemViewModel by viewModels()
     private var job: Job? = null
 
-    private var typeInt: Int = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addData = arguments?.getParcelable("add_data")
@@ -90,15 +87,6 @@ class AddEditAppealFragment: BaseFragment(
             uploadAppeal()
         }
         observeState()
-        lifecycleScope.launch {
-            viewModel.searchData.collect { list ->
-                val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list.map { it.name })
-                binding.etAutoComplete.setAdapter(arrayAdapter)
-                binding.etAutoComplete.setOnItemClickListener { _, _, position, _ ->
-                    typeInt = list[position].id
-                }
-            }
-        }
     }
 
     private fun uploadAppeal() {
@@ -117,7 +105,7 @@ class AddEditAppealFragment: BaseFragment(
                 data.speakerYear,
                 data.speakerGender,
                 data.speakerPhone,
-                typeInt,
+                searchableFragment.selectedData.id,
                 comment,
                 data.oldImages,
                 imageAdapter.uriList.map {
@@ -249,15 +237,17 @@ class AddEditAppealFragment: BaseFragment(
         }
     }
     private fun searchAutoComplete() {
-        binding.etAutoComplete.addTextChangedListener { editable ->
-            job?.cancel()
-            if (editable != null && editable.toString().isNotBlank()) {
-                job = lifecycleScope.launch {
-                    delay(200L)
-                    viewModel.onEvent(ProblemEvent.OnSearchAppealType(editable.toString().trim().lowercase()))
-                }
+        binding.etAutoComplete.setOnFocusChangeListener { _, has ->
+            if (has) {
+                searchableFragment.setTargetFragment(this, 100)
+                searchableFragment.show(requireFragmentManager(), SearchableFragment.TAG)
+                binding.etAutoComplete.clearFocus()
             }
         }
+    }
+
+    override fun selectedItem(title: String) {
+        binding.etAutoComplete.setText(title)
     }
 
     override fun onStop() {

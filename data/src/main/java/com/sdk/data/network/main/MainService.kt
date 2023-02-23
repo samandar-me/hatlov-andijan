@@ -52,7 +52,7 @@ interface MainService {
 
     @GET("api/v1/murojaat/turi/")
     suspend fun searchAppealType(
-        @Query("search") query: String
+        //@Query("search") query: String = ""
     ): Response<SearchResponse>
 
     @GET("api/v1/murojaat/")

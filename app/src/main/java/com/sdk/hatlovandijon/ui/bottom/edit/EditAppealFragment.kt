@@ -37,6 +37,8 @@ class EditAppealFragment : BaseFragment(R.layout.fragment_add) {
             binding.tvInterviewer.textColor(if (isVisible) R.color.gray else R.color.blue)
         }
         binding.btnContinue.click {
+            findNavController().navigate(R.id.action_editAppealFragment_to_addEditAppealFragment)
+            return@click
             val streetName = binding.etStreetName.text.toString().trim()
             val homeAddress = binding.etHomeAddress.text.toString().trim()
             val ownerHomeName = binding.etHomeBoss.text.toString().trim()
