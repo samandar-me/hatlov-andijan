@@ -20,7 +20,6 @@ import javax.inject.Inject
 class MainRepositoryImpl @Inject constructor(
     private val mainService: MainService,
 ) : MainRepository {
-    private val TAG = "@@@"
     override suspend fun getVariables(): Flow<Status<List<VariableStatus>>> = flow {
         emit(Status.Loading)
         try {
@@ -57,7 +56,6 @@ class MainRepositoryImpl @Inject constructor(
         flow {
             emit(Status.Loading)
             try {
-                Log.d("@@@", "addAppealRequest: $appealRequest")
                 val response = mainService.addAppeal(
                     appealRequest.address,
                     appealRequest.ownerHomeName,
@@ -176,6 +174,5 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun deleteImage(id: Int) {
         val res = mainService.deleteImage(id)
-        Log.d(TAG, "deleteImage: ${res.body()}")
     }
 }

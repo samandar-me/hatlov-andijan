@@ -26,7 +26,6 @@ class FilterPagingSource(private val apiService: MainService, private val mapQue
             }
             LoadResult.Page(data = response?.result!!, prevKey = null, nextKey = nextPageNumber)
         } catch (e: Exception) {
-            println("@@@$e")
             LoadResult.Error(e)
         }
     }

@@ -7,13 +7,13 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface LoginService {
-    @POST("api/v1/login/")
+    @POST("")
     @FormUrlEncoded
     suspend fun login(
         @Field("username") userName: String,
         @Field("password") password: String
     ): Response<LoginResponseDTO>
 
-    @POST("api/v1/token/refresh/")
+    @POST("")
     suspend fun refreshToken()
 }

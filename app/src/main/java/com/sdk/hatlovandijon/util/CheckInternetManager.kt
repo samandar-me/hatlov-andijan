@@ -14,7 +14,7 @@ class CheckInternetManager : BroadcastReceiver() {
         }
     }
 
-    fun hasInternet(context: Context?): Boolean {
+    private fun hasInternet(context: Context?): Boolean {
         val networkHelper = NetworkHelper(context!!)
         return networkHelper.isNetworkConnected()
     }
